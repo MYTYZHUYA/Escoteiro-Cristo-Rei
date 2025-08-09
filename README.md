@@ -4,10 +4,13 @@ Trabalho do DevMenthos para a criação do site da ong
 
 # Índice
 
-Link
-
-
-
+- [Descrição](#descri%C3%A7%C3%A3o)
+- [Tecnologias Utilizadas](#tecnologias-utilizadas)
+- [Estrutura de Pastas](https://github.com/MYTYZHUYA/Escoteiro-Cristo-Rei/edit/main/README.md#estrutura-de-pasta)
+- [Desenvolvimento e Instalação](https://github.com/MYTYZHUYA/Escoteiro-Cristo-Rei/edit/main/README.md#desenvolvimento-e-instala%C3%A7%C3%A3o)
+- [Contribuição](https://github.com/MYTYZHUYA/Escoteiro-Cristo-Rei/edit/main/README.md#contribui%C3%A7%C3%A3o)
+- [Licença](https://github.com/MYTYZHUYA/Escoteiro-Cristo-Rei/edit/main/README.md#licen%C3%A7a)
+- [Autores](https://github.com/MYTYZHUYA/Escoteiro-Cristo-Rei/edit/main/README.md#autores)
 
 
 # Descrição
@@ -32,7 +35,10 @@ Não temos ainda
 <!-- Vai ser em uma aula mais para frente (Basicamente, colocar o meu projeto para poderem copiar e fazer alterações, mas sem alterar o projeto diretamente -->
 
 # Licença
+
+Este projeto está sob a licença MTI License. </br>
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/MYTYZHUYA/Escoteiro-Cristo-Rei/blob/main/LICENSE)
+
 # Autores
 - Matheus R. Santos
 - Yuuki L. Kameda
