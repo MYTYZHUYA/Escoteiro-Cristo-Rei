@@ -7,7 +7,7 @@ Trabalho do **DevMenthos** para a criação do site da ong.
 - [Descrição](#descri%C3%A7%C3%A3o)
 - [Tecnologias Utilizadas](#tecnologias-utilizadas)
 - [Estrutura de Pastas](#%EF%B8%8Festrutura-de-pasta)
-- [Desenvolvimento e Instalação](#desenvolvimento-e-instala%C3%A7%C3%A3o)
+- [Desenvolvimento e Instalação](#%EF%B8%8Fdesenvolvimento-e-instalação)
 - [Contribuição](#contribui%C3%A7%C3%A3o)
 - [Licença](#licen%C3%A7a)
 - [Autores](#autores)
