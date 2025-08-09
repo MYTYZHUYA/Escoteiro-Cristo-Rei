@@ -23,14 +23,25 @@ Este projeto tem o objetivo de criar um site para o Grupo Escoteiro Cristo Rei e
  - CSS3
  - Git (para contrele de versão)
  - GitHub (para hospedagem e colaboração)
+<!-- ![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=MYTYZHUYA&layout=compact) -->
 
 # 🗂️Estrutura de Pasta
 
 Não temos ainda
 
 # ⚙️Desenvolvimento e Instalação
+Siga os passos abaixo para configurar o ambiente de desenvolvimento e executar o projeto:
 
+1. **Clone o repositório:**
+   ```bash
+   git clone https://github.com/MYTYZHUYA/Escoteiro-Cristo-Rei.git
+   ```
+2. **Navegue até a pasta do projeto:**
+   ```bash
+   cd Escoteiro-Cristo-Rei
+   ```
 
+3. **Abra o arquivo principal:** Abra o arquivo `src/index.html` <!-- Esse src/index.html sera mudado caso a pasta não seja mais essa ok-->em seu navegador para visualizar o projeto.
 # 🤝Contribuição
 <!-- Vai ser em uma aula mais para frente (Basicamente, colocar o meu projeto para poderem copiar e fazer alterações, mas sem alterar o projeto diretamente -->
 
@@ -40,8 +51,8 @@ Este projeto está sob a licença MTI License. </br>
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/MYTYZHUYA/Escoteiro-Cristo-Rei/blob/main/LICENSE)
 
 # 👥Autores
-- Matheus R. Santos
-- Yuuki L. Kameda
-- Gabriel F. Ferraz
-- Christian D. Passos
-- Andre R. Silva Nunes 
+- Matheus R. Santos - Programador
+- Yuuki L. Kameda - Documentador
+- Gabriel F. Ferraz - Design 
+- Christian D. Passos - Design 
+- Andre R. Silva Nunes - Programador
