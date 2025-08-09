@@ -32,7 +32,7 @@ Não temos ainda
 <!-- Vai ser em uma aula mais para frente (Basicamente, colocar o meu projeto para poderem copiar e fazer alterações, mas sem alterar o projeto diretamente -->
 
 # Licença
-
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 # Autores
 - Matheus R. Santos
 - Yuuki L. Kameda
