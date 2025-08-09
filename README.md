@@ -1,6 +1,6 @@
 # <img width="30" height="30" alt="image" src="https://github.com/user-attachments/assets/82207ba1-4815-4413-a722-d80c84118165" /> Dev-Grupo Escoteiro Cristo Rei 
 ![Status do Projeto](https://img.shields.io/badge/Status-Em%20Desenvolvimento-blue)</br>
-Trabalho do **DevMenthos** para a criação do site da ong.
+Trabalho do **Amarelo Pastes** em parceria do **DevMenthos** para a criação do site da ong.
 
 # 📋Índice
 
@@ -56,3 +56,4 @@ Este projeto está sob a licença MTI License. </br>
 - Gabriel F. Ferraz - Design 
 - Christian D. Passos - Design 
 - Andre R. Silva Nunes - Programador
+
