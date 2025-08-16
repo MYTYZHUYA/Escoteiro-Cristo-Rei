@@ -28,7 +28,21 @@ Este projeto tem o objetivo de criar um site para o Grupo Escoteiro Cristo Rei e
 # 🗂️Estrutura de Pasta
 
 Não temos ainda
-
+<!--
+```
+Escoteiro-Cristo-Rei/
+ ├── Projeto-Escoteiro/
+ |   ├── docs/             # Documentação extra
+ |   ├── main/
+ |   |   ├── css/          # Arquivos de estilo
+ |   |   |   └── style.css
+ |   |   ├── fontes/       # Fontes de Texto
+ |   |   ├── imagens/      # Imagens Utilizadas
+ |   |   └── index.html    # Arquivo Principal
+ ├── LICENSE
+ └── README.md
+```
+-->
 # ⚙️Desenvolvimento e Instalação
 Siga os passos abaixo para configurar o ambiente de desenvolvimento e executar o projeto:
 
