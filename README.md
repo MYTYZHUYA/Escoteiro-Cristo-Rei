@@ -19,11 +19,10 @@ Este projeto tem o objetivo de criar um site para o Grupo Escoteiro Cristo Rei e
 
 # 💻Tecnologias Utilizadas
  - HTML5
- - BootsTrap
+ - BootsTrap <!-- Remover isso aqui!!! A gente não vai usar bootstrap -->
  - CSS3
  - Git (para contrele de versão)
  - GitHub (para hospedagem e colaboração)
-<!-- ![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=MYTYZHUYA&layout=compact) -->
 
 # 🗂️Estrutura de Pasta
 
@@ -39,6 +38,7 @@ Escoteiro-Cristo-Rei/
  |   |   ├── fontes/       # Fontes de Texto
  |   |   ├── imagens/      # Imagens Utilizadas
  |   |   └── index.html    # Arquivo Principal
+ |   ├── app/              # API
  ├── LICENSE
  └── README.md
 ```
