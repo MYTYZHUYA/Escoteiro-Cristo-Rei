@@ -3,10 +3,13 @@
 
 # Formato das rotas:
 ```
-[<Autenticada> <Método HTTP> <Endpoint>]
+[<Requer Autenticação> <Método HTTP> <Endpoint>]
 handler = <Classe>::<Método>
 body = '{"<parameter_name>":"<type>"}' (opcional)
 ```
+
+## Outros:
+- Rotas por padrão não requerem autenticação, use "*" antes do método para definir que usa autenticação
 
 ## Exemplos:
 Rota Simples:
