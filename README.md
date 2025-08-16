@@ -67,7 +67,7 @@ Sinta-se à vontade para abrir uma *issue* ou enviar um *pull request*! Para con
 
 # 📝Licença
 
-Este projeto está sob a licença MTI License. </br>
+Este projeto está sob a licença MIT License. </br>
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/MYTYZHUYA/Escoteiro-Cristo-Rei/blob/main/LICENSE)
 
 # 👥Autores
