@@ -58,6 +58,12 @@ Siga os passos abaixo para configurar o ambiente de desenvolvimento e executar o
 3. **Abra o arquivo principal:** Abra o arquivo `src/index.html` <!-- Esse src/index.html sera mudado caso a pasta não seja mais essa ok-->em seu navegador para visualizar o projeto.
 # 🤝Contribuição
 <!-- Vai ser em uma aula mais para frente (Basicamente, colocar o meu projeto para poderem copiar e fazer alterações, mas sem alterar o projeto diretamente -->
+Sinta-se à vontade para abrir uma *issue* ou enviar um *pull request*! Para contribuir, siga estes passos:
+1.  Faça um `fork` do projeto.
+2.  Crie uma nova `branch` para sua alteração: `git checkout -b minha-nova-feature`.
+3.  Faça o `commit` das suas alterações: `git commit -m 'feat: Minha nova feature'`.
+4.  Envie para o `branch` original: `git push origin minha-nova-feature`.
+5.  Abra um `pull request`.
 
 # 📝Licença
 
