@@ -23,7 +23,6 @@ Este projeto tem o objetivo de criar um site para o Grupo Escoteiro Cristo Rei e
 
 # 💻Tecnologias Utilizadas
  - HTML5
- - BootsTrap <!-- Remover isso aqui!!! A gente não vai usar bootstrap -->
  - CSS3
  - Git (para contrele de versão)
  - GitHub (para hospedagem e colaboração)
