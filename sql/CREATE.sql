@@ -12,7 +12,7 @@ CREATE TABLE Troups (
     id INT PRIMARY KEY AUTO_INCREMENT,
     id_group INT NOT NULL,
     name VARCHAR(127) NOT NULL,
-    FOREIGN KEY (id_group) REFERENCES Groups(id)    
+    FOREIGN KEY (id_group) REFERENCES Groups(id) ON DELETE CASCADE
 );
 
 CREATE TABLE Patrols (
@@ -20,7 +20,7 @@ CREATE TABLE Patrols (
     id_troup INT NOT NULL,
     status BOOLEAN NOT NULL DEFAULT TRUE,
     name VARCHAR(127) NOT NULL,
-    FOREIGN KEY (id_troup) REFERENCES Troups(id)
+    FOREIGN KEY (id_troup) REFERENCES Troups(id) ON DELETE CASCADE
 );
 
 CREATE TABLE Users (
@@ -35,7 +35,7 @@ CREATE TABLE Grupo_Integrantes (
     id_group INT NOT NULL,    
     id_user INT NOT NULL,
     status VARCHAR(32) NOT NULL DEFAULT "Ativo",
-    FOREIGN KEY (id_group) REFERENCES Groups(id),
+    FOREIGN KEY (id_group) REFERENCES Groups(id) ON DELETE CASCADE,
     FOREIGN KEY (id_user) REFERENCES Users(id)
 );
 
@@ -43,7 +43,7 @@ CREATE TABLE Troup_Integrantes (
     id_troup INT NOT NULL,    
     id_user INT NOT NULL,
     status VARCHAR(32) NOT NULL DEFAULT "Ativo",
-    FOREIGN KEY (id_troup) REFERENCES Troups(id),
+    FOREIGN KEY (id_troup) REFERENCES Troups(id) ON DELETE CASCADE,
     FOREIGN KEY (id_user) REFERENCES Users(id)
 );
 
@@ -51,7 +51,7 @@ CREATE TABLE Patrol_Integrantes (
     id_patrol INT NOT NULL,    
     id_user INT NOT NULL,
     status VARCHAR(32) NOT NULL DEFAULT "Ativo",
-    FOREIGN KEY (id_patrol) REFERENCES Patrols(id),
+    FOREIGN KEY (id_patrol) REFERENCES Patrols(id) ON DELETE CASCADE,
     FOREIGN KEY (id_user) REFERENCES Users(id)
 );
 
@@ -69,11 +69,16 @@ CREATE TABLE Badge_Levels (
     -- Só um 'título' para o distintivo, por exemplo se for um distintivo nível máximo, o título pode ser meste em tal coisa
     title VARCHAR(32),
     level INT NOT NULL DEFAULT 0,
-    FOREIGN KEY (id_badge) REFERENCES Badges(id)
+    FOREIGN KEY (id_badge) REFERENCES Badges(id) ON DELETE CASCADE
 );
 
+CREATE TRIGGER AutoBadgeInitialLevel
+    AFTER INSERT ON Badges
+    FOR EACH ROW
+    INSERT INTO Badge_Levels (id_badge, title) VALUES (NEW.id, "Initial Level (Placeholder)");
+
 -- Cada etapa para conseguir um distintivo específica
-CREATE TABLE BadgeSteps (
+CREATE TABLE Badge_Level_Steps (
     -- Posição desse passo em uma lista de passos
     order_index INT NOT NULL DEFAULT 0,
     -- Nível do distintivo que requer esse passo
@@ -81,8 +86,8 @@ CREATE TABLE BadgeSteps (
     id_badge INT NOT NULL,
     title VARCHAR(127) NOT NULL,
     description VARCHAR(255),
-    FOREIGN KEY (id_badge) REFERENCES Badges(id),
-    FOREIGN KEY (target_level) REFERENCES Badge_Levels(id)
+    FOREIGN KEY (id_badge) REFERENCES Badges(id) ON DELETE CASCADE,
+    FOREIGN KEY (target_level) REFERENCES Badge_Levels(id) ON DELETE CASCADE
 );
 
 -- Distintivos que um usuário tem
@@ -90,14 +95,14 @@ CREATE TABLE User_Badges (
     id_user INT NOT NULL,
     id_badge INT NOT NULL,
     id_step INT NOT NULL,
-    id_level INT NOT NULL,
+    id_level INT,
 
     status ENUM("Paused", "Progressing", "Complete") DEFAULT "Paused",
     -- Calculado pela API em porcentagem -> Passos concluídos / Quantidade de passos
     progress INT NOT NULL DEFAULT 0,
 
     FOREIGN KEY (id_user) REFERENCES Users(id),
-    FOREIGN KEY (id_badge) REFERENCES Badges(id),
-    FOREIGN KEY (id_step) REFERENCES BadgeSteps(id),
+    FOREIGN KEY (id_badge) REFERENCES Badges(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_step) REFERENCES Badge_Level_Steps(id),
     FOREIGN KEY (id_level) REFERENCES Badge_Levels(id)
 );
