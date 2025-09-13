@@ -25,7 +25,9 @@ CREATE TABLE Patrols (
 
 CREATE TABLE Users (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    reg CHAR(8) NOT NULL,
+    reg CHAR(8) NOT NULL UNIQUE,
+    username VARCHAR(32) NOT NULL,
+    password VARCHAR(127) NOT NULL,
     name VARCHAR(255) NOT NULL
 );
 
