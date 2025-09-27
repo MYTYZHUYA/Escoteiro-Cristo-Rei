@@ -67,8 +67,7 @@ class Endpoint {
             $this->param_names[$param_name[0]] = $idx;
         }
     }
-
-
+    
 
     public function getMethod(): String {
         return $this->method;
@@ -79,7 +78,7 @@ class Endpoint {
     }
 
     public function getRawUrl(): String {
-        return "api$this->raw_url";
+        return getenv("API_PREFIX") . "$this->raw_url";
     }
     
     public function getParamNames(): array {

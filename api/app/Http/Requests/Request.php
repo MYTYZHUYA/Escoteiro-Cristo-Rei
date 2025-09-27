@@ -50,11 +50,11 @@ class Request {
         return $body_data;
     }
 
-    private function getTargetUrlFromRequest(string $prefix = "api"): string {
+    private function getTargetUrlFromRequest(string $prefix = "app"): string {
         $exploded_uri = explode("/", $_SERVER["REQUEST_URI"]);
         $crop_at = 0;
         for ($idx = 0; $idx < sizeof($exploded_uri); $idx++) {
-            if ($exploded_uri[$idx] == $prefix) {
+            if ($exploded_uri[$idx] === $prefix) {
                 $crop_at = $idx;
                 break;
             }

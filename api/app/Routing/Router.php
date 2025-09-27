@@ -24,7 +24,7 @@ class Router {
     public function parseRequest() {
         $request = new Request();
 
-        $selected_endpoint = $this->selectEndpoint($request->getTargetEndpoint());
+        $selected_endpoint = $this->selectEndpoint($request->getTargetEndpoint(getenv("API_PREFIX")));
         if (!$this->handleEndpointValidation($request, $selected_endpoint)) { return; }
         
         if ($selected_endpoint->needsAuth()) {
@@ -63,11 +63,13 @@ class Router {
     }
 
     protected function handleEndpointValidation(Request $request, ?Endpoint $selected_endpoint): bool {
-        $target_endpoint = $request->getTargetEndpoint();
+        $target_endpoint = $request->getTargetEndpoint(getenv("API_PREFIX"));
+        // echo $target_endpoint;
 
         if ($selected_endpoint == null) {
-            $exception = new EntityNotFoundException("No matching endpoint for url " + $target_endpoint);
+            $exception = new EntityNotFoundException([], "No matching endpoint for url '$target_endpoint'");
             $exception->setMiscData(["valid_endpoints" => array_keys($this->endpoints)]);
+            // var_dump(array_keys($this->endpoints));
 
             throw $exception;
         }
@@ -84,20 +86,21 @@ class Router {
         return true;
     }
 
+    // Isso aqui nem é usado, não sei porquê ainda tá aqui, vou deixar comentado para não confundir
     // Removes everything that won't be used to select an Endpoint 
-    public function getTargetEndpoint(String $prefix = "api"): string {
-        $exploded_uri = explode("/", $_SERVER["REQUEST_URI"]);
-        $crop_at = 0;
-        for ($idx = 0; $idx < sizeof($exploded_uri); $idx++) {
-            if ($exploded_uri[$idx] == $prefix) {
-                $crop_at = $idx;
-                break;
-            }
-        }
-        $target_endpoint = array_slice($exploded_uri, $crop_at);
+    // public function getTargetEndpoint(String $prefix = "api"): string {
+    //     $exploded_uri = explode("/", $_SERVER["REQUEST_URI"]);
+    //     $crop_at = 0;
+    //     for ($idx = 0; $idx < sizeof($exploded_uri); $idx++) {
+    //         if ($exploded_uri[$idx] == $prefix) {
+    //             $crop_at = $idx;
+    //             break;
+    //         }
+    //     }
+    //     $target_endpoint = array_slice($exploded_uri, $crop_at);
 
-        return implode("/", $target_endpoint);
-    }
+    //     return implode("/", $target_endpoint);
+    // }
 
     protected function createEndpoints() {
         foreach (array_keys($this->route_config) as $section) {
