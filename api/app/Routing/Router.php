@@ -15,7 +15,7 @@ class Router {
     private array $route_config;
     private array $endpoints;
 
-    public function __construct(private String $route_ini_path) 
+    public function __construct(String $route_ini_path) 
     {   
         $this->route_config = parse_ini_file($route_ini_path, true);
         $this->createEndpoints();
@@ -42,12 +42,12 @@ class Router {
 
     protected function handleAuthTokenValidation(Request $request) {
         if ($request->getAuthToken() == "") {
-            throw new UnauthorizedException(["token" => "Missing"], message: "You need an Authorization token to access this route");
+            throw new UnauthorizedException(["token" => "Missing"], "You need an Authorization token to access this route");
         }
 
         $jwt = new JwtManager(getenv("SECRET_KEY"));
         if (!$jwt->validateToken($request->getAuthToken())) {
-            throw new UnauthorizedException(["token" => "Invalid"], message: "Your Authorization token is not valid | Try refreshing your session");
+            throw new UnauthorizedException(["token" => "Invalid"], "Your Authorization token is not valid | Try refreshing your session");
         }
     }
 
@@ -66,14 +66,14 @@ class Router {
         $target_endpoint = $request->getTargetEndpoint();
 
         if ($selected_endpoint == null) {
-            $exception = new EntityNotFoundException(message: "No matching endpoint for url '$target_endpoint");
+            $exception = new EntityNotFoundException("No matching endpoint for url " + $target_endpoint);
             $exception->setMiscData(["valid_endpoints" => array_keys($this->endpoints)]);
 
             throw $exception;
         }
 
         if ($selected_endpoint->getMethod() != $request->getMethod()) {
-            throw new WrongMethodException("{$selected_endpoint->getMethod()}", message: "Wrong method for endpoint: '{$selected_endpoint->getRawUrl()}");
+            throw new WrongMethodException("{$selected_endpoint->getMethod()}", "Wrong method for endpoint: '{" + $selected_endpoint->getRawUrl() + "}");
         }
 
         $param_errors = $this->validateUrlParameters($selected_endpoint, $target_endpoint);

@@ -23,7 +23,7 @@ class AuthController extends Controller {
         }
 
         if (!$this->auth_gateway->validateUserCredentials($body_data["reg"], $body_data["password"])) {
-            throw new UnauthorizedException(message: "Invalid register or password");
+            throw new UnauthorizedException([], "Invalid register or password");
         }
 
         // Token Creation etc
@@ -97,7 +97,7 @@ class AuthController extends Controller {
         }
 
         if ($this->auth_gateway->sessionExpired((int) $session_data["id"])) {
-            throw new ForbiddenException(message: "Your session expired, please log in again to create a new session");
+            throw new ForbiddenException([], "Your session expired, please log in again to create a new session");
         }
         return true;
     }

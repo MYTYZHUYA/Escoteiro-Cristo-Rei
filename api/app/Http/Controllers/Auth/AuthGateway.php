@@ -16,7 +16,7 @@ class AuthGateway extends BaseGateway {
         $stmt->execute();
     }
 
-    public function getSession(string $token_hash): array | false {
+    public function getSession(string $token_hash): array {
         $sql = "SELECT * FROM active_sessions
                 WHERE token_hash = :token_hash";
 

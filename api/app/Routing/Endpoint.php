@@ -2,10 +2,10 @@
 
 namespace App\Routing;
 
-enum EndpointFormat: int {
-    case NEEDS_AUTH = 0;
-    case METHOD = 1;
-    case RAW_URL = 2;
+class EndpointFormat {
+    public const NEEDS_AUTH = 0;
+    public const METHOD = 1;
+    public const RAW_URL = 2;
 }
 
 class Endpoint {
@@ -27,7 +27,7 @@ class Endpoint {
         $splitted_section = explode(" ", $section, 3);
         $offset = -1;
         if (sizeof($splitted_section) == 3) {
-            $needs_auth = $splitted_section[EndpointFormat::NEEDS_AUTH->value];
+            $needs_auth = $splitted_section[EndpointFormat::NEEDS_AUTH];
             if ($needs_auth == "*") {
                 $this->needs_auth = true;
             } else {
@@ -41,8 +41,8 @@ class Endpoint {
             $offset = 0;
         }
 
-        $method = $splitted_section[EndpointFormat::METHOD->value + $offset];
-        $raw_url = $splitted_section[EndpointFormat::RAW_URL->value + $offset];
+        $method = $splitted_section[EndpointFormat::METHOD + $offset];
+        $raw_url = $splitted_section[EndpointFormat::RAW_URL + $offset];
         
         if (array_key_exists("body", $section_content)) {
             $this->required_fields = json_decode($section_content["body"], true);

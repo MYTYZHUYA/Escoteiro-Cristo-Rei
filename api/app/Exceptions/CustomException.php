@@ -7,8 +7,10 @@ class CustomException extends Exception {
     protected array $errors = [];
     protected array $misc_data = [];
     
-    public function __construct(array $errors = []) {
+    public function __construct(array $errors = [], string $message, int $http_response_code) {
         $this->errors = $errors;
+        $this->message = $message;
+        $this->http_response_code = $http_response_code;
     }
 
     public function getErrors(): array {
