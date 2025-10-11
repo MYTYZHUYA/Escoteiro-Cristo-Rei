@@ -12,7 +12,7 @@ Trabalho do **Amarelo Pastel** em parceria do **DevMenthors** para a criação d
 - [Licença](#licen%C3%A7a)
 - [Autores](#autores)
 
-# 📋Links úteis:
+# 🪄Links úteis:
 - [Figma](https://www.figma.com/design/adb2rnju3A3G4Csak4HZ6G/Amarelo-Pastel?node-id=0-1&t=TE3NfSwuCkidKEYO-1)
 - [Documentação](https://github.com/MYTYZHUYA/Escoteiro-Cristo-Rei/tree/docs/docs)
 
