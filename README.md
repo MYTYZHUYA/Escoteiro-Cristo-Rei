@@ -78,6 +78,5 @@ Este projeto está sob a licença MIT License. </br>
 - Matheus R. Santos - Programador
 - Yuuki L. Kameda - Documentador
 - Gabriel F. Ferraz - Design 
-- Christian D. Passos - Design 
 - Andre R. Silva Nunes - Programador
 
