@@ -26,6 +26,7 @@ Este projeto tem o objetivo de criar um site para o Grupo Escoteiro Cristo Rei e
  - CSS3
  - Git (para contrele de versão)
  - GitHub (para hospedagem e colaboração)
+ - Bootstrap
 
 # 🗂️Estrutura de Pasta
 
