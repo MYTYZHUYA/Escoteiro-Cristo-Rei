@@ -15,7 +15,7 @@ class Request {
  
     public function __construct() {
         $this->method = $_SERVER["REQUEST_METHOD"];
-        $this->target_endpoint = $this->getTargetUrlFromRequest();
+        $this->target_endpoint = $this->getTargetUrlFromRequest(getenv("API_PREFIX"));
 
         $auth_info = $this->getAuthTokenFromRequest();
         if (!empty($auth_info)) {
