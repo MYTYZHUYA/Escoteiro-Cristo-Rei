@@ -33,10 +33,18 @@ CREATE TABLE Users (
     name VARCHAR(255) NOT NULL
 );
 
+CREATE TABLE Chefia (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    id_user INT NOT NULL, -- A chefia também pode ser interpretada como usuário
+    -- Informações adicionais necessárias
+
+    FOREIGN KEY (id_user) REFERENCES Users(id) ON DELETE CASCADE
+);
+
 CREATE TABLE Grupo_Integrantes (
     id_group INT NOT NULL,    
     id_user INT NOT NULL,
-    status VARCHAR(32) NOT NULL DEFAULT "Ativo",
+    status ENUM("Ativo", "Inativo") DEFAULT "Ativo",
     FOREIGN KEY (id_group) REFERENCES Groups(id) ON DELETE CASCADE,
     FOREIGN KEY (id_user) REFERENCES Users(id)
 );
@@ -44,7 +52,7 @@ CREATE TABLE Grupo_Integrantes (
 CREATE TABLE Troup_Integrantes (
     id_troup INT NOT NULL,    
     id_user INT NOT NULL,
-    status VARCHAR(32) NOT NULL DEFAULT "Ativo",
+    status ENUM("Ativo", "Inativo") DEFAULT "Ativo",
     FOREIGN KEY (id_troup) REFERENCES Troups(id) ON DELETE CASCADE,
     FOREIGN KEY (id_user) REFERENCES Users(id)
 );
@@ -52,7 +60,7 @@ CREATE TABLE Troup_Integrantes (
 CREATE TABLE Patrol_Integrantes (
     id_patrol INT NOT NULL,    
     id_user INT NOT NULL,
-    status VARCHAR(32) NOT NULL DEFAULT "Ativo",
+    status ENUM("Ativo", "Inativo") DEFAULT "Ativo",
     FOREIGN KEY (id_patrol) REFERENCES Patrols(id) ON DELETE CASCADE,
     FOREIGN KEY (id_user) REFERENCES Users(id)
 );
@@ -82,7 +90,7 @@ CREATE TRIGGER AutoBadgeInitialLevel
 -- Cada etapa para conseguir um distintivo específica
 CREATE TABLE Badge_Level_Steps (
     -- TODO: Mudar isso aqui, para algum tipo de id melhor
-    
+
     id INT PRIMARY KEY AUTO_INCREMENT,
     -- Posição desse passo em uma lista de passos
     order_index INT NOT NULL DEFAULT 0,
@@ -95,10 +103,22 @@ CREATE TABLE Badge_Level_Steps (
     FOREIGN KEY (target_level) REFERENCES Badge_Levels(id) ON DELETE CASCADE
 );
 
+CREATE TABLE Badge_Requests (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    id_user INT NOT NULL,
+    id_badge INT NOT NULL,
+    id_in_charge INT, -- Id do chefe que aprovou
+    status ENUM("Idle", "Aprovado", "Recusado") DEFAULT "Idle",
+    FOREIGN KEY (id_user) REFERENCES Users(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_badge) REFERENCES Badges(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_in_charge) REFERENCES Chefia(id) ON DELETE CASCADE
+);
+
 -- Distintivos que um usuário tem
 CREATE TABLE User_Badges (
     id_user INT NOT NULL,
     id_badge INT NOT NULL,
+    id_request INT NOT NULL,
     id_step INT,
     id_level INT DEFAULT 1,
 
@@ -108,6 +128,7 @@ CREATE TABLE User_Badges (
 
     CONSTRAINT FK_badge_user_id FOREIGN KEY (id_user) REFERENCES Users(id) ON DELETE CASCADE,
     CONSTRAINT FK_user_badge_id FOREIGN KEY (id_badge) REFERENCES Badges(id) ON DELETE CASCADE,
+    CONSTRAINT FK_request_id FOREIGN KEY (id_request) REFERENCES Badge_Requests(id) ON DELETE CASCADE,
     CONSTRAINT FK_current_badge_step_id FOREIGN KEY (id_step) REFERENCES Badge_Level_Steps(id) ON DELETE SET NULL,
     CONSTRAINT FK_current_badge_level_id FOREIGN KEY (id_level) REFERENCES Badge_Levels(id) ON DELETE SET NULL
 );
