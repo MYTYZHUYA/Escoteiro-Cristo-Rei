@@ -1,3 +1,5 @@
+DROP DATABASE EscoteirosCR;
+
 CREATE DATABASE EscoteirosCR;
 USE EscoteirosCR;
 
@@ -79,6 +81,9 @@ CREATE TRIGGER AutoBadgeInitialLevel
 
 -- Cada etapa para conseguir um distintivo específica
 CREATE TABLE Badge_Level_Steps (
+    -- TODO: Mudar isso aqui, para algum tipo de id melhor
+    
+    id INT PRIMARY KEY AUTO_INCREMENT,
     -- Posição desse passo em uma lista de passos
     order_index INT NOT NULL DEFAULT 0,
     -- Nível do distintivo que requer esse passo
@@ -94,15 +99,15 @@ CREATE TABLE Badge_Level_Steps (
 CREATE TABLE User_Badges (
     id_user INT NOT NULL,
     id_badge INT NOT NULL,
-    id_step INT NOT NULL,
-    id_level INT,
+    id_step INT,
+    id_level INT DEFAULT 1,
 
     status ENUM("Paused", "Progressing", "Complete") DEFAULT "Paused",
     -- Calculado pela API em porcentagem -> Passos concluídos / Quantidade de passos
     progress INT NOT NULL DEFAULT 0,
 
-    FOREIGN KEY (id_user) REFERENCES Users(id),
-    FOREIGN KEY (id_badge) REFERENCES Badges(id) ON DELETE CASCADE,
-    FOREIGN KEY (id_step) REFERENCES Badge_Level_Steps(id),
-    FOREIGN KEY (id_level) REFERENCES Badge_Levels(id)
+    CONSTRAINT FK_badge_user_id FOREIGN KEY (id_user) REFERENCES Users(id) ON DELETE CASCADE,
+    CONSTRAINT FK_user_badge_id FOREIGN KEY (id_badge) REFERENCES Badges(id) ON DELETE CASCADE,
+    CONSTRAINT FK_current_badge_step_id FOREIGN KEY (id_step) REFERENCES Badge_Level_Steps(id) ON DELETE SET NULL,
+    CONSTRAINT FK_current_badge_level_id FOREIGN KEY (id_level) REFERENCES Badge_Levels(id) ON DELETE SET NULL
 );
