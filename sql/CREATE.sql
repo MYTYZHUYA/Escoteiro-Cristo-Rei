@@ -132,3 +132,13 @@ CREATE TABLE User_Badges (
     CONSTRAINT FK_current_badge_step_id FOREIGN KEY (id_step) REFERENCES Badge_Level_Steps(id) ON DELETE SET NULL,
     CONSTRAINT FK_current_badge_level_id FOREIGN KEY (id_level) REFERENCES Badge_Levels(id) ON DELETE SET NULL
 );
+
+CREATE TABLE active_sessions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    token_hash CHAR(64) NOT NULL, -- Refresh token
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    expires_at DATETIME,
+    UNIQUE (token_hash),
+    FOREIGN KEY (user_id) REFERENCES Users(id)
+);

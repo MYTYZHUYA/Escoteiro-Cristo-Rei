@@ -47,3 +47,4 @@ require __DIR__ . "/Http/Middleware/BaseGateway.php";
 require __DIR__ . "/Http/Controllers/Controller.php";
 
 require __DIR__ . "/Http/Controllers/Test/TestController.php";
+require __DIR__ . "/Http/Controllers/Auth/AuthController.php";

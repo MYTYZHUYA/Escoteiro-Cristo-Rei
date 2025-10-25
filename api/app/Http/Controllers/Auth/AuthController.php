@@ -92,7 +92,7 @@ class AuthController extends Controller {
     }
 
     private function checkSessionData($session_data): bool {
-        if ($session_data == false) {
+        if ($session_data == []) {
             throw new UnauthorizedException(["session" => "non-existent"]);
         }
 

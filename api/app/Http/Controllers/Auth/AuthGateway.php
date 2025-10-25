@@ -25,7 +25,8 @@ class AuthGateway extends BaseGateway {
         $stmt->bindValue(":token_hash", $token_hash, PDO::PARAM_STR);
 
         $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return is_bool($result) ? [] : $result;
     }
 
     public function removeSession(string $refresh_token): void {
@@ -55,15 +56,15 @@ class AuthGateway extends BaseGateway {
         return $exp_unix > time();
     }
 
-    public function validateUserCredentials(string $username, string $password): bool {
-        $sql = "SELECT COUNT(*) FROM users
+    public function validateUserCredentials(string $reg, string $password): bool {
+        $sql = "SELECT COUNT(*) FROM Users
                 WHERE 
-                    username = :username AND
+                    reg = :reg AND
                     password = :password";
         
         $stmt = $this->conn->prepare($sql);
 
-        $stmt->bindValue(":username", $username, PDO::PARAM_STR);
+        $stmt->bindValue(":reg", $reg, PDO::PARAM_STR);
         $stmt->bindValue(":password", $password, PDO::PARAM_STR);
         
         $stmt->execute();
