@@ -31,6 +31,9 @@ CREATE TABLE Users (
     username VARCHAR(32) NOT NULL,
     password VARCHAR(127) NOT NULL,
     name VARCHAR(255) NOT NULL
+    -- por algum motivo não funciona:
+    -- CONSTRAINT CK_LEN_username CHECK LEN(username) >= 4,
+    -- CONSTRAINT CK_LEN_password CHECK LEN(password) >= 6
 );
 
 CREATE TABLE Chefia (
@@ -46,7 +49,7 @@ CREATE TABLE Grupo_Integrantes (
     id_user INT NOT NULL,
     status ENUM("Ativo", "Inativo") DEFAULT "Ativo",
     FOREIGN KEY (id_group) REFERENCES Groups(id) ON DELETE CASCADE,
-    FOREIGN KEY (id_user) REFERENCES Users(id)
+    FOREIGN KEY (id_user) REFERENCES Users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE Troup_Integrantes (
@@ -54,7 +57,7 @@ CREATE TABLE Troup_Integrantes (
     id_user INT NOT NULL,
     status ENUM("Ativo", "Inativo") DEFAULT "Ativo",
     FOREIGN KEY (id_troup) REFERENCES Troups(id) ON DELETE CASCADE,
-    FOREIGN KEY (id_user) REFERENCES Users(id)
+    FOREIGN KEY (id_user) REFERENCES Users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE Patrol_Integrantes (
@@ -62,7 +65,7 @@ CREATE TABLE Patrol_Integrantes (
     id_user INT NOT NULL,
     status ENUM("Ativo", "Inativo") DEFAULT "Ativo",
     FOREIGN KEY (id_patrol) REFERENCES Patrols(id) ON DELETE CASCADE,
-    FOREIGN KEY (id_user) REFERENCES Users(id)
+    FOREIGN KEY (id_user) REFERENCES Users(id) ON DELETE CASCADE
 );
 
 

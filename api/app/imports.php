@@ -48,3 +48,4 @@ require __DIR__ . "/Http/Controllers/Controller.php";
 
 require __DIR__ . "/Http/Controllers/Test/TestController.php";
 require __DIR__ . "/Http/Controllers/Auth/AuthController.php";
+require __DIR__ . "/Http/Controllers/User/UserController.php";
