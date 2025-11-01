@@ -75,7 +75,8 @@ class Router {
         }
 
         if ($selected_endpoint->getMethod() != $request->getMethod()) {
-            throw new WrongMethodException("{$selected_endpoint->getMethod()}", "Wrong method for endpoint: '{" + $selected_endpoint->getRawUrl() + "}");
+            $raw_url = $selected_endpoint->getRawUrl();
+            throw new WrongMethodException("{$selected_endpoint->getMethod()}", [], "Wrong method for endpoint: '$raw_url'");
         }
 
         $param_errors = $this->validateUrlParameters($selected_endpoint, $target_endpoint);

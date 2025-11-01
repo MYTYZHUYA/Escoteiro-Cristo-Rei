@@ -84,6 +84,7 @@ class AuthController extends Controller {
         $jwt_manager = new JwtManager(getenv("SECRET_KEY"));
         $created_at = time();
 
+        // FIXME?: Não sei se eu deveria colocar no access_token o 'user_id' ou o 'rg'
         return $jwt_manager->createToken([
             "user_id" => $user_id,
             "exp" => $created_at + ((int) getenv("ACCESS_TOKEN_EXP")),
