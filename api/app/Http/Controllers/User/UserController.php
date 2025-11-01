@@ -37,13 +37,51 @@ class UserController extends Controller {
         ]);
     }
 
-    public function getAccountData(string $auth_token) {
+    public function getAccountData(string $auth_token, array $body_data) {
         $jwt = new JwtManager(getenv("SECRET_KEY"));
         $token_data = $jwt->decodeToken($auth_token);
 
         $account_data = $this->gateway->getAccountFromId($token_data["user_id"]);
         echo json_encode([
             "account_data" => $account_data
+        ]);
+    }
+
+    public function updateAccountData(string $auth_token, array $body_data) {
+        $jwt = new JwtManager(getenv("SECRET_KEY"));
+        $token_data = $jwt->decodeToken($auth_token);
+
+        $old_data = $this->gateway->getAccountFromId($token_data["user_id"]);
+        foreach ($old_data as $key => $value) {
+            if (!array_key_exists($key, $body_data)) {
+                $body_data[$key] = $value;
+                continue;
+            }
+            if ($body_data[$key] == "") {
+                $body_data[$key] = $value; 
+            }
+        }
+        $errors = $this->checkFieldLengths(
+            ["reg", "username", "password", "name"], 
+            [[8, 8], [4, 32], [6, 127], [0, 255]],
+            $body_data
+        );
+        if (!empty($errors)) {
+            throw new UnprocessableEntityException($errors);
+        }
+
+        // TODO: Update para outras coisas relacionadas ao usuário
+        $account_data = $this->gateway->updateAccountData(
+            $token_data["user_id"],
+            $body_data["password"],
+            $body_data["username"],
+            $body_data["name"],
+        );
+
+        $result = $this->auth_gateway->clearSessions($token_data["user_id"]);
+        echo json_encode([
+            "account_data" => $account_data,
+            "result" => $result
         ]);
     }
 

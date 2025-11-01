@@ -16,7 +16,7 @@ class AuthGateway extends BaseGateway {
         $stmt->execute();
     }
 
-    public function getSession(string $token_hash): array {
+    private function getSession(string $token_hash): array {
         $sql = "SELECT * FROM active_sessions
                 WHERE token_hash = :token_hash";
 
@@ -69,5 +69,46 @@ class AuthGateway extends BaseGateway {
         
         $stmt->execute();
         return !empty($stmt->fetch(PDO::FETCH_ASSOC)["COUNT(*)"]);
+    }
+
+    public function clearSessions(string $user_id) {
+        $sql = "DELETE FROM active_sessions
+                WHERE user_id = :user_id";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindValue(":user_id", $user_id, PDO::PARAM_STR);
+
+        $stmt->execute();
+        $result = $stmt->fetch();
+        return is_bool($result) ? [] : $result;
+    }
+
+    public function getSessionData(string $refresh_token) : array {
+        $token_hash = TokenHasher::hashToken($refresh_token, getenv("SECRET_KEY"));
+        $session_data = $this->getSession($token_hash);
+
+        if ($this->checkSessionData($session_data)) {
+            return $session_data;
+        };
+
+        return [];
+    }
+
+    public function validateSession(string $refresh_token) : bool {
+        $token_hash = TokenHasher::hashToken($refresh_token, getenv("SECRET_KEY"));
+        $session_data = $this->getSession($token_hash);
+
+        return $this->checkSessionData($session_data);
+    }
+
+    private function checkSessionData(array $session_data): bool {
+        if ($session_data == []) {
+            throw new UnauthorizedException(["session" => "non-existent"]);
+        }
+
+        if ($this->sessionExpired((int) $session_data["id"])) {
+            throw new ForbiddenException([], "Your session expired, please log in again to create a new session");
+        }
+        return true;
     }
 }

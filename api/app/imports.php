@@ -41,6 +41,7 @@ require __DIR__ . "/Routing/Router.php";
 // Middleware
 
 require __DIR__ . "/Http/Middleware/BaseGateway.php";
+require __DIR__ . "/Http/Controllers/Auth/AuthGateway.php";
 
 // Controllers
 

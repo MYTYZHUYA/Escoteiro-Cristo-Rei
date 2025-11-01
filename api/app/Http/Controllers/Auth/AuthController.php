@@ -8,7 +8,6 @@ require_once __DIR__ . "/../User/UserGateway.php";
 
 class AuthController extends Controller {
     private AuthGateway $auth_gateway;
-    // TODO: Create the userGateway
     private UserGateway $user_gateway;
     public function __construct() {
         $this->auth_gateway = new AuthGateway();
@@ -18,16 +17,13 @@ class AuthController extends Controller {
     public function startSession(array $body_data) {
         // user_id, reg, password
         $user_data = $this->user_gateway->getAccount($body_data["reg"]);
-        if ($user_data == false) { 
+        if (empty($user_data)) { 
             throw new EntityNotFoundException();
         }
 
         if (!$this->auth_gateway->validateUserCredentials($body_data["reg"], $body_data["password"])) {
             throw new UnauthorizedException([], "Invalid register or password");
         }
-
-        // Token Creation etc
-        // $jwt_manager = new JwtManager(getenv("SECRET_KEY"));
 
         $access_token = $this->genAccessToken($user_data["id"]);
 
@@ -44,9 +40,8 @@ class AuthController extends Controller {
     }
 
     public function checkSessionStats(array $body_data) {
-        $token_hash = TokenHasher::hashToken($body_data["refresh_token"], getenv("SECRET_KEY"));
-        $session_data = $this->auth_gateway->getSession($token_hash);
-        if (!$this->checkSessionData($session_data)) { return; }
+        $session_data = $this->auth_gateway->getSessionData($body_data["refresh_token"]);
+        // if (!$this->auth_gateway->checkSessionData($session_data)) { return; }
 
         $exp_unix = strtotime($session_data["expires_at"]);
         $start_unix = strtotime($session_data["created_at"]);
@@ -59,8 +54,7 @@ class AuthController extends Controller {
     }
 
     public function quitSession(array $body_data) {
-        $session_data = $this->auth_gateway->getSession($body_data["refresh_token"]);
-        if (!$this->checkSessionData($session_data)) { return; }
+        if (!$this->auth_gateway->validateSession($body_data["refresh_token"])) {return;}
 
         $this->auth_gateway->removeSession($body_data["refresh_token"]);
         echo json_encode([
@@ -69,10 +63,7 @@ class AuthController extends Controller {
     }
 
     public function refreshSession(array $body_data) {
-        $token_hash = TokenHasher::hashToken($body_data["refresh_token"], getenv("SECRET_KEY"));
-        $session_data = $this->auth_gateway->getSession($token_hash);
-        if (!$this->checkSessionData($session_data)) { return; }
-
+        $session_data = $this->auth_gateway->getSessionData($body_data["refresh_token"]);
         
         $access_token = $this->genAccessToken($session_data["user_id"]);
         echo json_encode([
@@ -92,14 +83,4 @@ class AuthController extends Controller {
         ]);
     }
 
-    private function checkSessionData($session_data): bool {
-        if ($session_data == []) {
-            throw new UnauthorizedException(["session" => "non-existent"]);
-        }
-
-        if ($this->auth_gateway->sessionExpired((int) $session_data["id"])) {
-            throw new ForbiddenException([], "Your session expired, please log in again to create a new session");
-        }
-        return true;
-    }
 }

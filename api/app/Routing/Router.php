@@ -10,6 +10,7 @@ use EntityNotFoundException;
 use UnauthorizedException;
 use UnprocessableEntityException;
 use WrongMethodException;
+use AuthGateway;
 
 class Router {
     private array $route_config;
@@ -27,11 +28,11 @@ class Router {
         $selected_endpoint = $this->selectEndpoint($request->getTargetEndpoint(getenv("API_PREFIX")));
         if (!$this->handleEndpointValidation($request, $selected_endpoint)) { return; }
         
+        if (!$this->handleBodyDataValidation($selected_endpoint, $request)) { return; }
+        
         if ($selected_endpoint->needsAuth()) {
             $this->handleAuthTokenValidation($request);
         }
-        
-        if (!$this->handleBodyDataValidation($selected_endpoint, $request)) { return; }
         
         $handler_info = $selected_endpoint->instantiateHandler();
         $instance = $handler_info["handler"];
@@ -49,7 +50,10 @@ class Router {
         if (!$jwt->validateToken($request->getAuthToken())) {
             throw new UnauthorizedException(["token" => "Invalid"], "Your Authorization token is not valid | Try refreshing your session");
         }
-    }
+
+        $auth_gateway = new AuthGateway();
+        if (!$auth_gateway->validateSession($request->getBodyData()["refresh_token"])) { return; }
+    } 
 
     protected function handleBodyDataValidation(Endpoint $selected_endpoint, Request $request): bool {
         $errors = $this->validateBodyData($request->getBodyData(), $selected_endpoint);
@@ -86,22 +90,6 @@ class Router {
 
         return true;
     }
-
-    // Isso aqui nem é usado, não sei porquê ainda tá aqui, vou deixar comentado para não confundir
-    // Removes everything that won't be used to select an Endpoint 
-    // public function getTargetEndpoint(String $prefix = "api"): string {
-    //     $exploded_uri = explode("/", $_SERVER["REQUEST_URI"]);
-    //     $crop_at = 0;
-    //     for ($idx = 0; $idx < sizeof($exploded_uri); $idx++) {
-    //         if ($exploded_uri[$idx] == $prefix) {
-    //             $crop_at = $idx;
-    //             break;
-    //         }
-    //     }
-    //     $target_endpoint = array_slice($exploded_uri, $crop_at);
-
-    //     return implode("/", $target_endpoint);
-    // }
 
     protected function createEndpoints() {
         foreach (array_keys($this->route_config) as $section) {

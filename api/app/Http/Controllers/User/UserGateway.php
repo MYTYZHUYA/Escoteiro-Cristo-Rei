@@ -38,7 +38,7 @@ class UserGateway extends BaseGateway {
     function getAccountData(string $query, bool $is_id) {
         $target_query = $is_id ? "id" : "reg";
         $sql = "SELECT 
-                    U.id AS UserId, reg, username, password, name, C.id AS ChiefId
+                    U.id AS id, reg, username, password, name, C.id AS chief_id
                 FROM Users U
                 LEFT JOIN Chefia C ON C.id_user = U.id
                 WHERE U.$target_query = :query";
@@ -67,6 +67,23 @@ class UserGateway extends BaseGateway {
         return [
             "id" => $this->conn->lastInsertId()
         ];
+    }
+
+    public function updateAccountData(string $user_id, string $password, string $username, string $name) : array {
+        $sql = "UPDATE Users
+                SET name = :name, username = :username, password = :password
+                WHERE id = :user_id";
+        
+        $stmt = $this->conn->prepare($sql);
+
+        $stmt->bindValue(":name", $name, PDO::PARAM_STR);
+        $stmt->bindValue(":username", $username, PDO::PARAM_STR);
+        $stmt->bindValue(":password", $password, PDO::PARAM_STR);
+        $stmt->bindValue(":user_id", $user_id, PDO::PARAM_STR);
+        
+        $stmt->execute();
+
+        return $this->getAccountFromId($user_id);
     }
 
     public function checkUserExists(string $reg): bool {

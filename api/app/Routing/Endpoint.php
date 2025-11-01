@@ -47,6 +47,10 @@ class Endpoint {
         if (array_key_exists("body", $section_content)) {
             $this->required_fields = json_decode($section_content["body"], true);
         }
+       
+        if ($this->needs_auth) {
+            $this->required_fields["refresh_token"] = "string";
+        }
         
         $this->handler_path = $section_content["handler"];
         
