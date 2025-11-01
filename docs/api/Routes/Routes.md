@@ -8,8 +8,9 @@ handler = <Classe>::<Método>
 body = '{"<parameter_name>":"<type>"}' (opcional)
 ```
 
-## Outros:
-- Rotas por padrão não requerem autenticação, use "*" antes do método para definir que usa autenticação
+## Autenticação:
+- Rotas por padrão não requerem autenticação, use ``*`` antes do método para definir que usa autenticação.
+- **Rotas autenticadas vão sempre pedir por um ``refresh_token`` no ``body``**
 
 ## Exemplos:
 Rota Simples:
