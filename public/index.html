@@ -9,6 +9,12 @@
 <body>
     <header class="barra-navegacao">
         <img src="img/logo.png" alt="Logotipo G.E. Cristo-Rei">
+        <input type="checkbox" id="menu-toggle" class="menu-toggle">
+        <label for="menu-toggle" class="hamburger" aria-label="Abrir menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </label>
         <nav class="links-navegacao" aria-label="Links principais">
             <a href="#" class="link-navegacao">Sobre</a>
             <a href="#" class="link-navegacao">Projetos</a>
@@ -93,7 +99,7 @@
         </div>
     </footer>
 
-    <!-- script do carrossel -->
+    <!-- script do carrossel e menu lateral -->
     <script>
     (function () {
       const carrossel = document.querySelector('.carrossel');
@@ -147,6 +153,33 @@
       // inicializa
       update();
     })();
+
+    // Menu lateral mobile
+    (function () {
+      const menuToggle = document.getElementById('menu-toggle');
+      const menuLateral = document.createElement('div');
+      menuLateral.className = 'menu-lateral';
+      menuLateral.innerHTML = `
+        <button class="close-btn" aria-label="Fechar menu">&times;</button>
+        <a href="#" class="link-navegacao">Sobre</a>
+        <a href="#" class="link-navegacao">Projetos</a>
+        <a href="#" class="link-navegacao">Contato</a>
+        <div class="botao-login">
+          <a href="#">Login</a>
+        </div>
+      `;
+      document.body.appendChild(menuLateral);
+
+      const hamburger = document.querySelector('.hamburger');
+      const closeBtn = menuLateral.querySelector('.close-btn');
+
+      hamburger.addEventListener('click', () => menuLateral.classList.add('open'));
+      closeBtn.addEventListener('click', () => menuLateral.classList.remove('open'));
+      menuLateral.addEventListener('click', (e) => {
+        if (e.target === menuLateral) menuLateral.classList.remove('open');
+      });
+    })();
+
     // atualiza ano no footer
     document.getElementById('year').textContent = new Date().getFullYear();
     </script>
