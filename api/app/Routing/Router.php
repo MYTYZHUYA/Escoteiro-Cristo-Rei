@@ -25,7 +25,7 @@ class Router {
     public function parseRequest() {
         $request = new Request();
 
-        $selected_endpoint = $this->selectEndpoint($request->getTargetEndpoint(getenv("API_PREFIX")));
+        $selected_endpoint = $this->selectEndpoint($request->getTargetEndpoint());
         if (!$this->handleEndpointValidation($request, $selected_endpoint)) { return; }
         
         if (!$this->handleBodyDataValidation($selected_endpoint, $request)) { return; }
@@ -67,7 +67,7 @@ class Router {
     }
 
     protected function handleEndpointValidation(Request $request, ?Endpoint $selected_endpoint): bool {
-        $target_endpoint = $request->getTargetEndpoint(getenv("API_PREFIX"));
+        $target_endpoint = $request->getTargetEndpoint();
         // echo $target_endpoint;
 
         if ($selected_endpoint == null) {
@@ -198,7 +198,11 @@ class Router {
 
     protected function validateBodyData(array $body_data, Endpoint $endpoint): array {
         $errors = [];
-        foreach (array_keys($endpoint->getRequiredFields()) as $key) {
+        foreach (array_keys($endpoint->getBodyFields()) as $key) {
+            if (str_starts_with($key, "?")) {
+                continue;
+            }
+
             if (!array_key_exists($key, $body_data)) {
                 $errors[$key] = "Missing";
             }

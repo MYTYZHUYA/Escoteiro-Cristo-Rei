@@ -5,15 +5,15 @@ use App\Http\Controllers\Controller;
 require_once __DIR__ . "/../Auth/AuthGateway.php";
 
 class UserController extends Controller {
-    private UserGateway $gateway;
-    private AuthGateway $auth_gateway;
+    protected UserGateway $gateway;
+    protected AuthGateway $auth_gateway;
 
     public function __construct() {
         $this->gateway = new UserGateway;
         $this->auth_gateway = new AuthGateway;
     }
 
-    public function createAccount(array $body_data) {
+    protected function createUserData(array $body_data): array {
         # FIXME: Terminar de fazer isso aqui
         $errors = $this->checkFieldLengths(
             ["reg", "username", "password", "name"], 
@@ -30,24 +30,36 @@ class UserController extends Controller {
         }
 
         $user_data = $this->gateway->createAccount($body_data["reg"], $body_data["password"], $body_data["username"], $body_data["name"]);
+        return $user_data;
+    }
+
+    public function createAccount(array $body_data) {
+        $user_data = $this->createUserData($body_data);
         http_response_code(200);
         echo json_encode([
             "message" => "User created successfully",
-            "user_data" => $user_data
+            "user_id" => $user_data["id"]
         ]);
     }
 
-    public function getAccountData(string $auth_token, array $body_data) {
+    protected function getUserAccountDataFromSession(string $auth_token): array { 
         $jwt = new JwtManager(getenv("SECRET_KEY"));
         $token_data = $jwt->decodeToken($auth_token);
 
         $account_data = $this->gateway->getAccountFromId($token_data["user_id"]);
+        return $account_data;
+    }
+    public function getAccountData(string $auth_token) {
+        $account_data = $this->getUserAccountDataFromSession($auth_token);
         echo json_encode([
             "account_data" => $account_data
         ]);
     }
 
-    public function updateAccountData(string $auth_token, array $body_data) {
+    # Retorna sempre um array com duas variáveis, nessa ordem:
+    # As novas informações da conta, em formato de array associativo
+    # Um valor booleano que demonstra se as sessões existentes foram removidas ou não
+    protected function updateUserAccountData(string $auth_token, array $body_data): array {
         $jwt = new JwtManager(getenv("SECRET_KEY"));
         $token_data = $jwt->decodeToken($auth_token);
 
@@ -77,11 +89,17 @@ class UserController extends Controller {
             $body_data["username"],
             $body_data["name"],
         );
-
+        
         $result = $this->auth_gateway->clearSessions($token_data["user_id"]);
+        return [$account_data, $result];
+    }
+
+    public function updateAccountData(string $auth_token, array $body_data) {
+        $update_result = $this->updateUserAccountData($auth_token, $body_data);
+
         echo json_encode([
-            "account_data" => $account_data,
-            "result" => $result
+            "account_data" => $update_result[0],
+            "result" => $update_result[1]
         ]);
     }
 

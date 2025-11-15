@@ -38,7 +38,7 @@ class UserGateway extends BaseGateway {
     function getAccountData(string $query, bool $is_id) {
         $target_query = $is_id ? "id" : "reg";
         $sql = "SELECT 
-                    U.id AS id, reg, username, password, name, C.id AS chief_id
+                    *
                 FROM Users U
                 LEFT JOIN Chefia C ON C.id_user = U.id
                 WHERE U.$target_query = :query";
