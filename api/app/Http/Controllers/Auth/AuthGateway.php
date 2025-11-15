@@ -57,18 +57,21 @@ class AuthGateway extends BaseGateway {
     }
 
     public function validateUserCredentials(string $reg, string $password): bool {
-        $sql = "SELECT COUNT(*) FROM Users
+        $sql = "SELECT password FROM Users
                 WHERE 
-                    reg = :reg AND
-                    password = :password";
+                    reg = :reg";
         
         $stmt = $this->conn->prepare($sql);
 
         $stmt->bindValue(":reg", $reg, PDO::PARAM_STR);
-        $stmt->bindValue(":password", $password, PDO::PARAM_STR);
-        
+
         $stmt->execute();
-        return !empty($stmt->fetch(PDO::FETCH_ASSOC)["COUNT(*)"]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($result == false) {
+            return false;
+        }
+        
+        return password_verify($password, $result["password"]);
     }
 
     public function clearSessions(string $user_id) {

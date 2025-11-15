@@ -61,7 +61,7 @@ class UserGateway extends BaseGateway {
         $stmt->bindValue(":reg", $reg, PDO::PARAM_STR);
         $stmt->bindValue(":name", $name, PDO::PARAM_STR);
         $stmt->bindValue(":username", $username, PDO::PARAM_STR);
-        $stmt->bindValue(":password", $password, PDO::PARAM_STR);
+        $stmt->bindValue(":password", password_hash($password, PASSWORD_DEFAULT), PDO::PARAM_STR);
         
         $stmt->execute();
         return [
@@ -78,7 +78,7 @@ class UserGateway extends BaseGateway {
 
         $stmt->bindValue(":name", $name, PDO::PARAM_STR);
         $stmt->bindValue(":username", $username, PDO::PARAM_STR);
-        $stmt->bindValue(":password", $password, PDO::PARAM_STR);
+        $stmt->bindValue(":password", password_hash($password, PASSWORD_DEFAULT), PDO::PARAM_STR);
         $stmt->bindValue(":user_id", $user_id, PDO::PARAM_STR);
         
         $stmt->execute();
