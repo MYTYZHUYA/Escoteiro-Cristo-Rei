@@ -42,7 +42,7 @@ Escoteiro-Cristo-Rei/
  |   |   ├── fontes/       # Fontes de Texto
  |   |   ├── imagens/      # Imagens Utilizadas
  |   |   └── index.html    # Arquivo Principal
- |   ├── app/              # API
+ |   ├── api/              # API
  ├── LICENSE
  └── README.md
 ```
