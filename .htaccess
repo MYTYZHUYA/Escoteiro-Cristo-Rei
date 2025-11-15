@@ -1,8 +1,7 @@
 RewriteEngine On
 
-RewriteCond %{REQUEST_URI} ^/api
-RewriteRule ^api/?(.*)$ app/api/index.php [L]
+# TODO: Arrumar isso aqui
 
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^.*$ public/index.php [L]
+RewriteRule ^api(?:/(.*))?$ api/app/index.php [L,QSA,NC]
+
+RewriteRule ^$ public/ [L]

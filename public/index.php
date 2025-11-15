@@ -2,16 +2,15 @@
 
 require_once "setup.php";
 
-$test_curl = curl_init();
-$url = getenv("API_ROOT") . "get-routes/";
-curl_setopt($test_curl, CURLOPT_URL, $url);
-// curl_setopt($test_curl, CURLOPT_HTTPGET, 1);
-curl_setopt($test_curl, CURLOPT_RETURNTRANSFER, 1);
+// $test_curl = curl_init();
+// $url = getenv("API_ROOT") . "get-routes/";
+// curl_setopt($test_curl, CURLOPT_URL, $url);
+// // curl_setopt($test_curl, CURLOPT_HTTPGET, 1);
+// curl_setopt($test_curl, CURLOPT_RETURNTRANSFER, 1);
 
-$result = curl_exec($test_curl);
-curl_close($test_curl);
-var_dump($result);
-
+// $result = curl_exec($test_curl);
+// curl_close($test_curl);
+// var_dump($result);
 ?>
 
 <!DOCTYPE html>
@@ -20,11 +19,11 @@ var_dump($result);
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>G.E. Cristo-Rei</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="public/style.css"/>
 </head>
 <body>
     <header class="barra-navegacao">
-        <img src="img/logo.png" alt="Logotipo G.E. Cristo-Rei">
+        <img src="public/img/logo.png" alt="Logotipo G.E. Cristo-Rei">
         <input type="checkbox" id="menu-toggle" class="menu-toggle">
         <label for="menu-toggle" class="hamburger" aria-label="Abrir menu">
             <span></span>
@@ -64,9 +63,9 @@ var_dump($result);
             <div class="carrossel" aria-label="Galeria de imagens" tabindex="0">
                 <button class="anterior" aria-label="Slide anterior" type="button">&lt;</button>
                 <div class="faixa-carrossel">
-                    <img src="img/slide1.jpg" alt="Aventura ao ar livre">
-                    <img src="img/slide2.jpg" alt="Valores e camaradagem">
-                    <img src="img/slide3.jpg" alt="Atividades em comunidade">
+                    <img src="public/img/slide1.jpg" alt="Aventura ao ar livre">
+                    <img src="public/img/slide2.jpg" alt="Valores e camaradagem">
+                    <img src="public/img/slide3.jpg" alt="Atividades em comunidade">
                 </div>
                 <button class="proximo" aria-label="Próximo slide" type="button">&gt;</button>
                 <div class="indicadores" aria-hidden="false"></div>
@@ -90,7 +89,7 @@ var_dump($result);
     <footer class="rodape" role="contentinfo" aria-label="Rodapé do site">
         <div class="rodape-interno">
             <div class="marca-rodape">
-                <img src="img/logo.png" alt="Logotipo G.E. Cristo-Rei" class="logo-rodape">
+                <img src="public/img/logo.png" alt="Logotipo G.E. Cristo-Rei" class="logo-rodape">
                 <div class="texto-marca">
                     <h3>G.E. Cristo‑Rei</h3>
                     <p>Escotismo que forma cidadãos, promove serviço e constrói comunidade.</p>
