@@ -1,0 +1,413 @@
+/* Reset simples */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+
+/* Tipografia e fundo */
+body{
+  font-family: "Segoe UI", Roboto, Arial, Helvetica, sans-serif;
+  background: linear-gradient(180deg,#fffdf5 0%, #FFFFE3 60%);
+  color: #222;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height: 1.45;
+}
+
+/* --- Cabeçalho / Navegação --- */
+.barra-navegacao{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 14px 4%;
+  background: linear-gradient(90deg,#501A17 0%, #3e120f 100%);
+  box-shadow: 0 6px 20px rgba(80,26,23,0.12);
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+.barra-navegacao img{
+  height: 56px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* Menu toggle (hidden) */
+.menu-toggle {
+  display: none;
+}
+
+/* Hamburger menu */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 4px;
+  background: rgba(255,255,255,0.1);
+  transition: background 0.2s;
+}
+.hamburger:hover {
+  background: rgba(255,255,255,0.2);
+}
+.hamburger span {
+  width: 25px;
+  height: 3px;
+  background: #fff;
+  margin: 3px 0;
+  transition: 0.3s;
+  border-radius: 2px;
+}
+
+/* Menu lateral para mobile */
+.menu-lateral {
+  position: fixed;
+  top: 0;
+  right: -300px;
+  width: 280px;
+  height: 100vh;
+  background: linear-gradient(180deg,#501A17 0%, #3e120f 100%);
+  box-shadow: -4px 0 20px rgba(0,0,0,0.3);
+  z-index: 50;
+  transition: right 0.3s ease;
+  padding: 80px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.menu-lateral.open {
+  right: 0;
+}
+.menu-lateral .close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Links no menu lateral */
+.menu-lateral .link-navegacao {
+  color: #fff;
+  text-decoration: none;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background .15s, transform .12s;
+  text-align: center;
+}
+.menu-lateral .link-navegacao:hover {
+  background: rgba(255,255,255,0.1);
+  transform: translateY(-2px);
+}
+.menu-lateral .botao-login a {
+  display: block;
+  background: #F4D35E;
+  padding: 12px 16px;
+  border-radius: 10px;
+  color: #111;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 8px 18px rgba(244,211,94,0.16);
+  text-align: center;
+}
+
+/* Desktop navigation */
+.links-navegacao {
+  display:flex;
+  gap:8px;
+  align-items:center;
+  margin-left: auto;
+  margin-right: 8px;
+}
+
+/* estilo dos links da navbar */
+.link-navegacao{
+  color: #fff;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background .15s, transform .12s;
+}
+.link-navegacao:hover{ background: rgba(255,255,255,0.06); transform: translateY(-2px); }
+
+/* botão de login */
+.botao-login a{
+  display:inline-block;
+  background: #F4D35E;
+  padding: 8px 12px;
+  border-radius: 10px;
+  color: #111;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 8px 18px rgba(244,211,94,0.16);
+}
+
+/* --- Seção principal (hero) --- */
+/* afasta do topo e centraliza verticalmente sem alterar outros espaçamentos */
+.secao-principal{
+  width: 100%;
+  display: flex;
+  gap: clamp(18px, 4vw, 56px);
+  align-items: center;
+  padding: clamp(20px, 3.5vw, 48px) clamp(4%, 6vw, 8%);
+  margin-top: clamp(28px, 6vh, 72px);
+  box-sizing: border-box;
+}
+.conteudo-principal{
+  flex: 1 1 56%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.92));
+  padding: clamp(18px,2.8vw,32px);
+  border-radius: 12px;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.06);
+  align-self: center;
+}
+.conteudo-principal h1{
+  font-size: clamp(20px, 3.4vw, 34px);
+  color: #2b2b2b;
+  margin-bottom: 8px;
+  line-height: 1.06;
+  font-weight: 800;
+}
+.conteudo-principal h2{
+  font-size: clamp(14px, 1.6vw, 18px);
+  color: #444;
+  margin-bottom: 14px;
+  font-weight: 500;
+}
+
+/* linha de botões */
+.linha-botoes{ display:flex; gap:12px; margin-top:8px; }
+.botao-primario{
+  background:#ff6a1a;
+  color:#fff;
+  padding:10px 16px;
+  border-radius:10px;
+  text-decoration:none;
+  font-weight:800;
+  box-shadow: 0 10px 22px rgba(255,72,0,0.12);
+}
+.botao-primario:hover{ transform: translateY(-2px); }
+.botao-secundario{
+  background:transparent;
+  color:#501A17;
+  padding:10px 16px;
+  border-radius:10px;
+  text-decoration:none;
+  border:2px solid rgba(80,26,23,0.08);
+  font-weight:700;
+}
+
+/* imagem ao lado do hero */
+.imagem-principal{
+  flex: 0 0 36%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  margin-top: 0; /* removido extra para alinhamento */
+  align-self: center;
+}
+.imagem-principal img{
+  width:100%;
+  max-width: 420px;
+  border-radius: 12px;
+ 
+  display:block;
+}
+
+/* divisória visual */
+.divisoria{
+  background: #501A17;
+  height: clamp(40px, 6vh, 64px);
+  border-radius: 6px;
+}
+
+/* --- Seção carrossel --- */
+.secao-carrossel{
+  display:flex;
+  gap: clamp(20px, 4.5vw, 72px);
+  align-items: stretch;
+  padding: clamp(18px, 3.5vw, 48px) clamp(4%, 6vw, 8%);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* carrossel container */
+.carrossel{
+  position: relative;
+  flex: 1 1 clamp(320px, 58%, 70%);
+  min-width: 280px;
+  overflow: hidden;
+  border-radius: 14px;
+  background: linear-gradient(180deg,#ffffff,#fbf9f5);
+  box-shadow: 0 14px 36px rgba(0,0,0,0.14);
+}
+
+/* faixa (track) */
+.faixa-carrossel{
+  display:flex;
+  transition: transform .45s cubic-bezier(.2,.8,.2,1);
+  will-change: transform;
+}
+/* cada slide ocupa 100% */
+.faixa-carrossel img{
+  flex: 0 0 100%;
+  width: 100%;
+  height: clamp(260px, 36vh, 520px);
+  object-fit: cover;
+  display:block;
+}
+
+/* botões anteriores/próximo posicionados */
+.anterior, .proximo{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.55);
+  color: #fff;
+  border: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+  transition: background .12s, transform .12s;
+}
+.anterior:hover, .proximo:hover{ background: rgba(0,0,0,0.72); transform: translateY(-50%) scale(1.03); }
+.anterior{ left: 12px; }
+.proximo{ right: 12px; }
+
+/* indicadores (dots) */
+.indicadores{
+  display:flex;
+  gap:10px;
+  justify-content:center;
+  padding: 10px;
+  margin-top: 12px;
+}
+.indicador{
+  width: 12px;
+  height: 12px;
+  background: #ddd;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: transform .16s, background .16s;
+}
+.indicador.active{ background: #0a74d1; transform: scale(1.12); }
+
+/* painel de texto à direita do carrossel */
+.painel-texto{
+  flex: 0 1 clamp(260px, 36%, 420px);
+  padding: clamp(16px, 2.6vw, 36px);
+  display:flex;
+  flex-direction: column;
+  gap: clamp(8px, 1.2vw, 16px);
+  align-items:flex-start;
+  justify-content:center;
+  background: rgba(255,255,255,0.82);
+  border-radius: 12px;
+  box-shadow: 0 10px 26px rgba(0,0,0,0.06);
+}
+.painel-texto h1{ font-size: clamp(18px,2.2vw,28px); margin-bottom:6px; }
+.resumo{ color:#444; font-size: 16px; }
+
+/* --- Rodapé --- */
+.rodape{
+  background: linear-gradient(180deg,#501A17 0%, #3e120f 100%);
+  color:#fff;
+  padding: 48px 16px;
+  border-top: 4px solid rgba(255,255,255,0.04);
+  box-shadow: 0 -8px 30px rgba(0,0,0,0.12);
+}
+.rodape-interno{
+  max-width: 1200px;
+  margin: 0 auto;
+  display:flex;
+  gap:28px;
+  align-items:flex-start;
+  justify-content:space-between;
+  flex-wrap:wrap;
+}
+.marca-rodape{ display:flex; gap:16px; align-items:center; flex:0 1 340px; }
+.logo-rodape{ width:92px; height:auto; border-radius:8px; background: rgba(255,255,255,0.04); padding:6px; box-shadow: 0 6px 18px rgba(0,0,0,0.25); }
+.texto-marca h3{ margin-bottom:6px; font-size:18px; }
+.texto-marca p{ margin:0; color:#fff6e8; font-size:14px; line-height:1.35; max-width:360px; }
+.meio-rodape{ display:flex; flex-direction:column; gap:10px; flex:1 1 420px; }
+.links-rodape{ display:flex; gap:10px; flex-wrap:wrap; }
+.links-rodape a{ color:#fff9e6; text-decoration:none; background:rgba(255,255,255,0.03); padding:8px 12px; border-radius:8px; font-weight:600; }
+.links-rodape a:hover{ background: rgba(244,211,94,0.12); color:#fff; transform: translateY(-2px); }
+.boletim{ color:#fff3d9; font-size:14px; margin:0; }
+.link-acao{ color:#F4D35E; font-weight:700; text-decoration:none; }
+.contato-rodape{ flex:0 0 220px; text-align:right; color:#fff9e6; }
+.linha-contato{ margin:0 0 8px 0; font-weight:700; letter-spacing:0.4px; }
+.contato-rodape a{ color:#F4D35E; text-decoration:none; font-weight:700; }
+.contato-rodape p{ margin:6px 0; }
+
+/* pequenas melhorias de acessibilidade/visibilidade */
+button:focus, a:focus { outline: 3px solid rgba(10,116,209,0.18); outline-offset: 3px; }
+
+/* Responsividade */
+@media (max-width: 1200px){
+  .secao-principal, .secao-carrossel{ padding: clamp(18px, 3vw, 48px) clamp(4%, 5vw, 8%); }
+  .conteudo-principal{ flex: 1 1 60%; }
+  .imagem-principal{ flex: 0 0 34%; }
+  .carrossel{ flex: 1 1 60%; }
+  .painel-texto{ flex: 0 1 34%; }
+}
+@media (max-width: 1100px){
+  .imagem-principal img { max-width: 360px; }
+  .faixa-carrossel img { height: clamp(220px, 30vh, 420px); }
+  .painel-texto h1{ font-size: clamp(16px, 2vw, 26px); }
+  .resumo{ font-size: 15px; }
+}
+@media (max-width: 900px){
+  .secao-principal, .secao-carrossel{ flex-direction: column; gap:18px; padding: 20px; }
+  .conteudo-principal, .imagem-principal, .painel-texto, .carrossel{ width:100%; flex:none; }
+  .rodape-interno{ gap:18px; }
+  .contato-rodape{ text-align:left; order:3; flex:1 1 100%; }
+  .meio-rodape{ order:2; width:100%; }
+  .marca-rodape{ order:1; width:100%; justify-content:flex-start; }
+  .barra-navegacao{ flex-wrap: wrap; justify-content: space-between; }
+  .links-navegacao{ margin-left: 0; margin-right: auto; }
+}
+@media (max-width: 768px){
+  .barra-navegacao{ padding: 10px 4%; position: relative; }
+  .barra-navegacao img{ height: 48px; }
+  .hamburger{ display: flex; }
+  .links-navegacao{ display: none; }
+  .botao-login{ display: none; }
+  .linha-botoes{ flex-direction: column; gap: 8px; align-items: stretch; }
+  .botao-primario, .botao-secundario{ text-align: center; padding: 12px 16px; }
+  .faixa-carrossel img{ height: clamp(200px, 25vh, 350px); }
+  .painel-texto{ padding: 20px; gap: 12px; }
+  .painel-texto h1{ font-size: 20px; }
+  .resumo{ font-size: 14px; }
+  .rodape{ padding: 32px 16px; }
+  .rodape-interno{ flex-direction: column; gap: 20px; align-items: center; text-align: center; }
+  .marca-rodape{ flex-direction: column; text-align: center; }
+  .meio-rodape{ text-align: center; }
+  .links-rodape{ justify-content: center; }
+  .contato-rodape{ text-align: center; }
+}
+@media (max-width: 480px){
+  .barra-navegacao{ padding:12px 4%; }
+  .logo-rodape{ width:74px; }
+  .link-navegacao{ padding:6px 8px; font-size:14px; }
+  .conteudo-principal h1{ font-size: 24px; }
+  .conteudo-principal h2{ font-size: 16px; }
+  .anterior, .proximo{ width: 36px; height: 36px; font-size: 16px; }
+  .indicadores{ padding: 8px; }
+  .indicador{ width: 10px; height: 10px; }
+}
+
+/* pequenas utilidades */
+.hidden { display:none !important;}
