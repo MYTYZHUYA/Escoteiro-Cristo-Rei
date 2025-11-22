@@ -1,3 +1,19 @@
+<?php
+
+require_once "setup.php";
+
+$test_curl = curl_init();
+$url = getenv("API_ROOT") . "get-routes/";
+curl_setopt($test_curl, CURLOPT_URL, $url);
+// curl_setopt($test_curl, CURLOPT_HTTPGET, 1);
+curl_setopt($test_curl, CURLOPT_RETURNTRANSFER, 1);
+
+$result = curl_exec($test_curl);
+curl_close($test_curl);
+var_dump($result);
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
