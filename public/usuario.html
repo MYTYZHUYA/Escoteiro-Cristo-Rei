@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Página do Usuário - G.E. Cristo-Rei</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <header class="barra-navegacao">
+        <img src="img/logo.png" alt="Logotipo G.E. Cristo-Rei">
+        <nav class="links-navegacao">
+            <a href="index.html"></a>
+        </nav>
+        <div class="botao-login">
+            <a href="#" onclick="logout()">Logout</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="secao-principal">
+            <div class="conteudo-principal">
+                <h1>Bem-vindo à Página do Usuário</h1>
+                <p>Esta é a área reservada para membros do G.E. Cristo-Rei.</p>
+                <p>Aqui você pode acessar informações exclusivas, atividades e muito mais.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="rodape">
+        <div class="rodape-interno">
+            <div class="marca-rodape">
+                <img src="img/logo.png" alt="Logotipo G.E. Cristo-Rei" class="logo-rodape">
+                <div class="texto-marca">
+                    <h3>G.E. Cristo‑Rei</h3>
+                    <p>Escotismo que forma cidadãos, promove serviço e constrói comunidade.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    function logout() {
+        window.location.href = 'index.html';
+    }
+    </script>
+</body>
+</html>
