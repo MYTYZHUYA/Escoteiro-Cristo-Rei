@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Login - G.E. Cristo-Rei</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body class="login-page">
+    <div class="login-modal">
+        <h1>Login para Membros</h1>
+        <form id="login-form">
+            <label for="numero">Número de Usuário:</label>
+            <input type="text" id="numero" name="numero" required>
+
+            <label for="senha">Senha:</label>
+            <input type="password" id="senha" name="senha" required>
+
+            <button type="submit">Entrar</button>
+            <div id="error-message" class="error" style="display: none;"></div>
+        </form>
+    </div>
+
+    <script>
+    document.getElementById('login-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const numero = document.getElementById('numero').value;
+        const senha = document.getElementById('senha').value;
+        const errorDiv = document.getElementById('error-message');
+
+        // Simple validation (in a real app, this would be server-side)
+        if (numero === '12345' && senha === 'escoteiro') {
+            window.location.href = 'usuario.html';
+        } else {
+            errorDiv.textContent = 'Número ou senha incorretos.';
+            errorDiv.style.display = 'block';
+        }
+    });
+    </script>
+</body>
+</html>
