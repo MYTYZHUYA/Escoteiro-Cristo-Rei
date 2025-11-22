@@ -32,10 +32,12 @@ var_dump($result);
             <span></span>
         </label>
         <nav class="links-navegacao" aria-label="Links principais">
-            
+            <a href="#" class="link-navegacao">Sobre</a>
+            <a href="#" class="link-navegacao">Projetos</a>
+            <a href="#" class="link-navegacao">Contato</a>
         </nav>
         <div class="botao-login">
-            <a href="login.html">Login para membros</a>
+            <a href="#">Login</a>
         </div>
     </header>
 
@@ -97,7 +99,10 @@ var_dump($result);
 
             <div class="meio-rodape" aria-label="Links e informação">
                 <nav class="links-rodape" aria-label="Links úteis">
-                 
+                    <a href="#">Sobre</a>
+                    <a href="#">Projetos</a>
+                    <a href="#">Programação</a>
+                    <a href="#">Voluntariado</a>
                 </nav>
                 <p class="boletim">Participe dos nossos projetos e atividades. <a href="#" class="link-acao">Saiba como</a></p>
             </div>
@@ -109,23 +114,6 @@ var_dump($result);
             </div>
         </div>
     </footer>
-
-    <!-- Modal para Quero Participar -->
-    <div id="modal-participar" class="modal-overlay">
-        <div class="modal-content">
-            <button class="modal-close" aria-label="Fechar modal">&times;</button>
-            <h2>Quero Participar</h2>
-            <p>Para mais informações e matrícula, entre em contato ou compareça às nossas reuniões para conversar com a chefia.</p>
-            <p><strong>Cronograma das reuniões:</strong></p>
-            <ul>
-                <li>Quartas-feiras das 19:30h às 22h</li>
-                <li>Quintas-feiras das 19:30h às 22h</li>
-            </ul>
-            <p><strong>Contato:</strong></p>
-            <p>Email: <a href="mailto:contato@cristo-rei.org">contato@cristo-rei.org</a></p>
-            <p>WhatsApp: <a href="https://wa.me/5511999999999" target="_blank">Clique aqui para conversar</a></p>
-        </div>
-    </div>
 
     <!-- script do carrossel e menu lateral -->
     <script>
@@ -205,30 +193,6 @@ var_dump($result);
       closeBtn.addEventListener('click', () => menuLateral.classList.remove('open'));
       menuLateral.addEventListener('click', (e) => {
         if (e.target === menuLateral) menuLateral.classList.remove('open');
-      });
-    })();
-
-    // Modal Quero Participar
-    (function () {
-      const modal = document.getElementById('modal-participar');
-      const botoesParticipar = document.querySelectorAll('.botao-primario');
-      const closeBtn = modal.querySelector('.modal-close');
-
-      botoesParticipar.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          e.preventDefault();
-          modal.style.display = 'flex';
-        });
-      });
-
-      closeBtn.addEventListener('click', () => {
-        modal.style.display = 'none';
-      });
-
-      modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-          modal.style.display = 'none';
-        }
       });
     })();
 
