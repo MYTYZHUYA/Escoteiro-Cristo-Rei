@@ -102,5 +102,68 @@ class GroupController extends Controller {
         ]);
     }
 
+    public function deleteGroup(string $auth_token) {
+        $jwt = new JwtManager(getenv("SECRET_KEY"));
+        $token_data = $jwt->decodeToken($auth_token);
+        
+        $user_group_data = $this->group_gateway->getUserGroupData($token_data["user_id"]);
+        if (empty($user_group_data)) {
+            throw new BadRequestException([], "You must be in a group to delete it");
+        }
+
+        $permissions = new GroupPermissions($user_group_data["permission_level"]);
+        if (!$permissions->DELETE_PERMISSION) {
+            throw new UnauthorizedException([], "You don't have permission to delete this group");
+        }
+
+        $this->group_gateway->deleteGroup($user_group_data["id_group"]);
+
+        echo json_encode([
+            "message" => "Group deleted successfully"
+        ]);
+    }
+
     // TODO: Add routes on UserController (or here idk) for joining groups
+    // TODO: Provavelmente não é qualquer um que pode sair entrando nos grupos
+    // depois vai ter que ter algum tipo de verificação ou autorização da chefia para a entrada no grupo
+    public function joinGroup(array $route_params, string $auth_token) {
+        $jwt = new JwtManager(getenv("SECRET_KEY"));
+        $token_data = $jwt->decodeToken($auth_token);
+        
+        $user_group_data = $this->group_gateway->getUserGroupData($token_data["user_id"]);
+        if (!empty($user_group_data)) {
+            throw new BadRequestException([], "You are already in a group");
+        }
+
+        if (empty($this->group_gateway->getGroupFromId($route_params["id_group"]))) {
+            // FIXME: eu não sei se isso aqui funciona na versão do php da Unimar !!
+            throw new EntityNotFoundException([], "Couldn't find a group with id of {$route_params['id_group']}");
+        }
+        // $this->group_gateway->deleteGroup($user_group_data["id_group"]);
+
+        $this->group_gateway->joinGroup($route_params["id_group"], $token_data["user_id"], PermissionLevels::USER);
+        echo json_encode([
+            "message" => "Joined group successfully!"
+        ]);
+    }
+
+    public function quitGroup(string $auth_token) {
+        $jwt = new JwtManager(getenv("SECRET_KEY"));
+        $token_data = $jwt->decodeToken($auth_token);
+        
+        $user_group_data = $this->group_gateway->getUserGroupData($token_data["user_id"]);
+        if (empty($user_group_data)) {
+            throw new BadRequestException([], "You must be in a group");
+        }
+
+        $this->group_gateway->quitGroup($token_data["user_id"]);
+        echo json_encode([
+            "message" => "Quit group successfully!"
+        ]);
+    }
+
+    // TODO:
+    public function transferToGroup(array $body_data, string $auth_token) {
+
+    }
 }

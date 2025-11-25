@@ -44,6 +44,8 @@ CREATE TABLE Chefia (
     FOREIGN KEY (id_user) REFERENCES Users(id) ON DELETE CASCADE
 );
 
+-- TODO: Apagar o grupo se ele não tiver mais integrantes (talvez)
+
 -- FIXME: Esse permission level é provisório, não tenho certeza se é ideal isso aí
 -- a ideia é ser tipo: 
 -- 0 -> integrante

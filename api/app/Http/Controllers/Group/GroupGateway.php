@@ -12,15 +12,18 @@ class PermissionLevels {
     public const USER = 0;
     public const MOD = 1;
     public const OWNER = 2;
+
     public const GROUP_UPDATE_THRESHOLD = 2;
+    public const GROUP_DELETE_THRESHOLD = 2;
 }
 
 class GroupPermissions {
     public bool $UPDATE_PERMISSION = false;
+    public bool $DELETE_PERMISSION = false;
 
     public function __construct(int $permission_level) {
         $this->UPDATE_PERMISSION = $permission_level >= PermissionLevels::GROUP_UPDATE_THRESHOLD;
-
+        $this->DELETE_PERMISSION = $permission_level >= PermissionLevels::GROUP_DELETE_THRESHOLD;
     }
 }
 
