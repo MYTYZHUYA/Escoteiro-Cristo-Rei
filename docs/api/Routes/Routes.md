@@ -1,6 +1,11 @@
 ## Assuntos relacionados:
 - [Endpoints](Endpoints.md)
 
+# 📋Documentação das Rotas:
+- [Grupo](GroupRoutes.md)
+- [Sessões](SessionRoutes.md)
+- [Usuário](UserRoutes.md)
+
 # Formato das rotas:
 ```
 [<Requer Autenticação> <Método HTTP> <Endpoint>]
