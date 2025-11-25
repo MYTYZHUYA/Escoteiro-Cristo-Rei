@@ -126,6 +126,7 @@ class GroupController extends Controller {
     // TODO: Add routes on UserController (or here idk) for joining groups
     // TODO: Provavelmente não é qualquer um que pode sair entrando nos grupos
     // depois vai ter que ter algum tipo de verificação ou autorização da chefia para a entrada no grupo
+    
     public function joinGroup(array $route_params, string $auth_token) {
         $jwt = new JwtManager(getenv("SECRET_KEY"));
         $token_data = $jwt->decodeToken($auth_token);
@@ -165,5 +166,91 @@ class GroupController extends Controller {
     // TODO:
     public function transferToGroup(array $body_data, string $auth_token) {
 
+    }
+
+    // TODO: 
+    public function transferOwnership(array $body_data, string $auth_token) {
+        
+    }
+
+    public function updateUserPermission(array $body_data, string $auth_token) {
+        $jwt = new JwtManager(getenv("SECRET_KEY"));
+        $token_data = $jwt->decodeToken($auth_token);
+        
+        $user_group_data = $this->group_gateway->getUserGroupData($token_data["user_id"]);
+        if (empty($user_group_data)) {
+            throw new BadRequestException([], "You must be in a group to update user permissions");
+        }
+
+        if ($body_data["target_user_id"] == $token_data["user_id"]) {
+            throw new BadRequestException([], "You can't update your own permissions");
+        }
+
+        $other_user_data = $this->group_gateway->getUserGroupData($body_data["target_user_id"]);
+        if (empty($other_user_data)) {
+            throw new BadRequestException([], "The target user must be in a group too");
+        }
+
+        if ($other_user_data["id_group"] != $user_group_data["id_group"]) {
+            throw new BadRequestException([], "The target user must be in the same group as you");
+        }
+
+        if ($other_user_data["permission_level"] >= $user_group_data["permission_level"]) {
+            throw new BadRequestException([], "You can't update the permissions of someone with higher or same permissions than you");
+        }
+
+        // FIXME: Isso aqui pode ser um problema
+        if ($body_data["permission_level"] > $user_group_data["permission_level"]) {
+            throw new BadRequestException([], "You can't give more permissions than you have to someone");
+        }
+
+        if ($body_data["permission_level"] == PermissionLevels::OWNER && $user_group_data["permission_level"] == PermissionLevels::OWNER) {
+            throw new BadRequestException([], "Try using the transfer ownership route");
+        }
+
+        $this->group_gateway->updateUserPermission($user_group_data["id_group"], $body_data["target_user_id"], $body_data["permission_level"]);
+        echo json_encode([
+            "message" => "Updated user permission level to {$body_data['permission_level']} successfully"
+        ]);
+    }
+
+    // Support routes
+
+    public function getGroupInfo(array $route_params) {
+        if (!$this->group_gateway->checkGroupExistsId($route_params["id_group"])) {
+            throw new EntityNotFoundException([], "This group doesn't exist");
+        }
+        
+        $group_data = $this->group_gateway->getGroupFromId($route_params["id_group"]);
+
+        echo json_encode([
+            "message" => "Got group data successfully",
+            "data" => $group_data
+        ]);
+    }
+
+    public function getGroupMembers(array $route_params) {
+        if (!$this->group_gateway->checkGroupExistsId($route_params["id_group"])) {
+            throw new EntityNotFoundException([], "This group doesn't exist");
+        }
+
+        $group_members = $this->group_gateway->getGroupMembers($route_params["id_group"]);
+        echo json_encode([
+            "message" => "Got group members successfully",
+            "members" => $group_members
+        ]);
+    }
+
+
+    public function getUserGroupData(array $route_params) {
+        $user_group_data = $this->group_gateway->getUserGroupData($route_params["user_id"]);
+        if (empty($user_group_data)) {
+            throw new EntityNotFoundException([], "The user is not in a group");
+        }
+
+        echo json_encode([
+            "message" => "Got user group data successfully",
+            "data" => $user_group_data
+        ]);
     }
 }

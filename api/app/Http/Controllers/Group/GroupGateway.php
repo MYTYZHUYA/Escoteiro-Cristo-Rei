@@ -129,6 +129,28 @@ class GroupGateway extends BaseGateway {
         return is_bool($result) ? [] : $result;
     }
 
+    public function getGroupMembers(int $group_id): array {
+        $sql = "SELECT 
+                    id_user
+                FROM Grupo_Integrantes
+                WHERE id_group = :id_group";
+        
+        $stmt = $this->conn->prepare($sql);
+
+        $stmt->bindValue(":id_group", $group_id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if (is_bool($result)) {
+            return [];
+        }
+
+        $members = [];
+        foreach (array_values($result) as $data) {
+            $members[] = $data["id_user"];
+        }
+        return $members;
+    }
 
     public function checkGroupExistsId(string $group_id): bool {
         $sql = "SELECT COUNT(id) FROM Groups
