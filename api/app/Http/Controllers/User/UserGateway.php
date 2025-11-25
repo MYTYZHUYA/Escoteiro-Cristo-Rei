@@ -27,7 +27,7 @@ class UserGateway extends BaseGateway {
         return is_bool($result) ? [] : $result;
     }
 
-    public function getAccountFromId(string $id): array {
+    public function getAccountFromId(int $id): array {
         return $this->getAccountData($id, true);    
     }
 
@@ -35,7 +35,7 @@ class UserGateway extends BaseGateway {
         return $this->getAccountData($reg, false);    
     }
 
-    function getAccountData(string $query, bool $is_id) {
+    protected function getAccountData(string $query, bool $is_id) {
         $target_query = $is_id ? "id" : "reg";
         $sql = "SELECT 
                     *
@@ -69,7 +69,7 @@ class UserGateway extends BaseGateway {
         ];
     }
 
-    public function updateAccountData(string $user_id, string $password, string $username, string $name) : array {
+    public function updateAccountData(int $user_id, string $password, string $username, string $name) : array {
         $sql = "UPDATE Users
                 SET name = :name, username = :username, password = :password
                 WHERE id = :user_id";
@@ -79,11 +79,35 @@ class UserGateway extends BaseGateway {
         $stmt->bindValue(":name", $name, PDO::PARAM_STR);
         $stmt->bindValue(":username", $username, PDO::PARAM_STR);
         $stmt->bindValue(":password", password_hash($password, PASSWORD_DEFAULT), PDO::PARAM_STR);
-        $stmt->bindValue(":user_id", $user_id, PDO::PARAM_STR);
+        $stmt->bindValue(":user_id", $user_id, PDO::PARAM_INT);
         
         $stmt->execute();
 
         return $this->getAccountFromId($user_id);
+    }
+
+    public function deleteAccount(int $user_id) {
+        $sql = "DELETE FROM Users
+                WHERE id = :user_id";
+        
+        $stmt = $this->conn->prepare($sql);
+
+        $stmt->bindValue(":user_id", $user_id, PDO::PARAM_INT);
+        $stmt->execute();
+        
+        return $this->checkAccountExists($user_id);
+    }
+
+    public function checkAccountExists(int $id): bool {
+        $sql = "SELECT COUNT(id) FROM Users
+                WHERE id = :id";
+        
+        $stmt = $this->conn->prepare($sql);
+
+        $stmt->bindValue(":id", $id, PDO::PARAM_INT);
+        
+        $stmt->execute();
+        return !empty($stmt->fetch()["COUNT(id)"]);
     }
 
     public function checkUserExists(string $reg): bool {

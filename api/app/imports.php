@@ -51,3 +51,4 @@ require __DIR__ . "/Http/Controllers/Test/TestController.php";
 require __DIR__ . "/Http/Controllers/Auth/AuthController.php";
 require __DIR__ . "/Http/Controllers/User/UserController.php";
 require __DIR__ . "/Http/Controllers/Chief/ChiefController.php";
+require __DIR__ . "/Http/Controllers/Group/GroupController.php";

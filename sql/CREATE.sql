@@ -5,7 +5,7 @@ USE EscoteirosCR;
 
 CREATE TABLE Groups (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    estado CHAR(2) NOT NULL,
+    state CHAR(2) NOT NULL,
     num INT NOT NULL,
     name VARCHAR(127) NOT NULL
 );
@@ -44,9 +44,15 @@ CREATE TABLE Chefia (
     FOREIGN KEY (id_user) REFERENCES Users(id) ON DELETE CASCADE
 );
 
+-- FIXME: Esse permission level é provisório, não tenho certeza se é ideal isso aí
+-- a ideia é ser tipo: 
+-- 0 -> integrante
+-- 1 -> Chefia (moderador)
+-- 2 -> Dono
 CREATE TABLE Grupo_Integrantes (
     id_group INT NOT NULL,    
-    id_user INT NOT NULL,
+    id_user INT NOT NULL UNIQUE,
+    permission_level INT DEFAULT 0, 
     status ENUM("Ativo", "Inativo") DEFAULT "Ativo",
     FOREIGN KEY (id_group) REFERENCES Groups(id) ON DELETE CASCADE,
     FOREIGN KEY (id_user) REFERENCES Users(id) ON DELETE CASCADE
@@ -54,15 +60,18 @@ CREATE TABLE Grupo_Integrantes (
 
 CREATE TABLE Troup_Integrantes (
     id_troup INT NOT NULL,    
-    id_user INT NOT NULL,
+    id_user INT NOT NULL UNIQUE,
+    permission_level INT DEFAULT 0, 
     status ENUM("Ativo", "Inativo") DEFAULT "Ativo",
     FOREIGN KEY (id_troup) REFERENCES Troups(id) ON DELETE CASCADE,
     FOREIGN KEY (id_user) REFERENCES Users(id) ON DELETE CASCADE
 );
 
+-- Revisar essa tag UNIQUE
 CREATE TABLE Patrol_Integrantes (
     id_patrol INT NOT NULL,    
-    id_user INT NOT NULL,
+    id_user INT NOT NULL UNIQUE,
+    permission_level INT DEFAULT 0, 
     status ENUM("Ativo", "Inativo") DEFAULT "Ativo",
     FOREIGN KEY (id_patrol) REFERENCES Patrols(id) ON DELETE CASCADE,
     FOREIGN KEY (id_user) REFERENCES Users(id) ON DELETE CASCADE

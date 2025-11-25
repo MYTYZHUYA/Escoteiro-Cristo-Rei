@@ -1,0 +1,7 @@
+RewriteEngine On
+
+# TODO: Arrumar isso aqui
+
+RewriteRule ^api(?:/(.*))?$ api/app/index.php [L,QSA,NC]
+
+RewriteRule ^$ public/ [L]

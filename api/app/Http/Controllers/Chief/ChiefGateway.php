@@ -1,7 +1,7 @@
 <?php 
 
 class ChiefGateway extends UserGateway {
-    public function getChief(string $id_user): array {
+    public function getChief(int $id_user): array {
         // TODO: Colocar as informações do chefe para serem puxadas aqui
         $sql = "SELECT C.id_user as ChefiaId
                 FROM Chefia C
@@ -18,7 +18,7 @@ class ChiefGateway extends UserGateway {
     }
 
     // TODO: Modificar isso aqui para inserir as informações necessárias do chefe
-    public function createChiefAccount(string $id_user): array {
+    public function createChiefAccount(int $id_user): array {
         $sql = "INSERT INTO Chefia (id_user)
                 VALUES (:id_user)";
         
@@ -32,7 +32,7 @@ class ChiefGateway extends UserGateway {
     }
 
     // TODO: Atualizar as informações específicas do chefe aqui
-    public function updateAccountData(string $id_user, string $password, string $username, string $name) : array {
+    public function updateAccountData(int $id_user, string $password, string $username, string $name) : array {
         parent::updateAccountData($id_user, $password, $username, $name);
         
         $sql = "UPDATE Chefia
@@ -47,7 +47,7 @@ class ChiefGateway extends UserGateway {
         return $this->getAccountFromId($id_user);
     }
 
-    public function checkChiefExists(string $chief_id): bool {
+    public function checkChiefExists(int $chief_id): bool {
         $sql = "SELECT COUNT(id) FROM Chefia
                 WHERE id = :chief_id";
         

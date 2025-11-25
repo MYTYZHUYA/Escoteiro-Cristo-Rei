@@ -15,10 +15,9 @@ class UserController extends Controller {
 
     protected function createUserData(array $body_data): array {
         # FIXME: Terminar de fazer isso aqui
-        $errors = $this->checkFieldLengths(
-            ["reg", "username", "password", "name"], 
-            [[8, 8], [4, 32], [6, 127], [0, 255]],
-            $body_data
+        $errors = $this->checkFieldLengths([
+            "reg" => [8, 8], "username" => [4, 32], 
+            "password" => [6, 127], "name" => [0, 255]],$body_data
         );
         
         if (!empty($errors)) {
@@ -73,11 +72,12 @@ class UserController extends Controller {
                 $body_data[$key] = $value; 
             }
         }
-        $errors = $this->checkFieldLengths(
-            ["reg", "username", "password", "name"], 
-            [[8, 8], [4, 32], [6, 127], [0, 255]],
-            $body_data
+
+        $errors = $this->checkFieldLengths([
+            "reg" => [8, 8], "username" => [4, 32], 
+            "password" => [6, 127], "name" => [0, 255]],$body_data
         );
+
         if (!empty($errors)) {
             throw new UnprocessableEntityException($errors);
         }
