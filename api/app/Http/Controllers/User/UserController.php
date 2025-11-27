@@ -16,7 +16,7 @@ class UserController extends Controller {
     protected function createUserData(array $body_data): array {
         # FIXME: Terminar de fazer isso aqui
         $errors = $this->checkFieldLengths([
-            "reg" => [8, 8], "username" => [4, 32], 
+            "reg" => [8, 8], "username" => [4, 32],
             "password" => [6, 127], "name" => [0, 255]],$body_data
         );
         
@@ -28,7 +28,7 @@ class UserController extends Controller {
             throw new DuplicateEntityException([], "User already exists");
         }
 
-        $user_data = $this->gateway->createAccount($body_data["reg"], $body_data["password"], $body_data["username"], $body_data["name"]);
+        $user_data = $this->gateway->createAccount($body_data["reg"], $body_data["email"], $body_data["password"], $body_data["username"], $body_data["name"]);
         return $user_data;
     }
 
@@ -85,6 +85,7 @@ class UserController extends Controller {
         // TODO: Update para outras coisas relacionadas ao usuário
         $account_data = $this->gateway->updateAccountData(
             $token_data["user_id"],
+            $body_data["email"],
             $body_data["password"],
             $body_data["username"],
             $body_data["name"],

@@ -3,14 +3,16 @@
 use App\Http\Controllers\Controller;
 use App\Helpers\JwtManager\JwtManager;
 require_once __DIR__ . "/GroupGateway.php";
+require_once __DIR__ . "/../Auth/AuthGateway.php";
 
 class GroupController extends Controller {
     protected GroupGateway $group_gateway;
+    protected AuthGateway $auth_gateway;
     public function __construct() {
         $this->group_gateway = new GroupGateway();
+        $this->auth_gateway = new AuthGateway();
     }
 
-    // TODO: Transferências de grupo
     // TODO: Add routes for gateway functions 
     public function createGroup(array $body_data, string $auth_token) {
         $errors = $this->checkFieldLengths(
@@ -168,9 +170,33 @@ class GroupController extends Controller {
 
     }
 
-    // TODO: 
+    // TODO: Mandar código no email do usuário e verificar aqui
     public function transferOwnership(array $body_data, string $auth_token) {
+        $jwt = new JwtManager(getenv("SECRET_KEY"));
+        $token_data = $jwt->decodeToken($auth_token);
+
+        if (!$this->auth_gateway->validateUserCredentialsId($token_data["user_id"], $body_data["password"])) {
+            throw new UnauthorizedException([], "Wrong password, ownership will not be transfered");
+        }
         
+        $user_group_data = $this->group_gateway->getUserGroupData($token_data["user_id"]);
+        $other_user_data = $this->group_gateway->getUserGroupData($body_data["target_user_id"]);
+        $this->update_permission_validations($token_data["user_id"], $body_data["target_user_id"], $user_group_data, $other_user_data);
+
+        if ($user_group_data["permission_level"] != PermissionLevels::OWNER) {
+            throw new UnauthorizedException([], "You must be the group owner to transfer ownership");
+        }
+
+        $group_data = $this->group_gateway->getGroupFromId($user_group_data["id_group"]);
+        if ($group_data["name"] != $body_data["group_name"]) {
+            throw new UnauthorizedException([], "The group name must be exactly the same as the name of the group");
+        }
+
+        $this->group_gateway->updateUserPermission($group_data["id"], $token_data["user_id"], PermissionLevels::MOD);
+        $this->group_gateway->updateUserPermission($group_data["id"], $body_data["target_user_id"], permission_level: PermissionLevels::OWNER);
+        echo json_encode([
+            "message" => "Transferred ownership to user (id: {$body_data['target_user_id']}) successfully"
+        ]);
     }
 
     public function updateUserPermission(array $body_data, string $auth_token) {
@@ -178,22 +204,8 @@ class GroupController extends Controller {
         $token_data = $jwt->decodeToken($auth_token);
         
         $user_group_data = $this->group_gateway->getUserGroupData($token_data["user_id"]);
-        if (empty($user_group_data)) {
-            throw new BadRequestException([], "You must be in a group to update user permissions");
-        }
-
-        if ($body_data["target_user_id"] == $token_data["user_id"]) {
-            throw new BadRequestException([], "You can't update your own permissions");
-        }
-
         $other_user_data = $this->group_gateway->getUserGroupData($body_data["target_user_id"]);
-        if (empty($other_user_data)) {
-            throw new BadRequestException([], "The target user must be in a group too");
-        }
-
-        if ($other_user_data["id_group"] != $user_group_data["id_group"]) {
-            throw new BadRequestException([], "The target user must be in the same group as you");
-        }
+        $this->update_permission_validations($token_data["user_id"], $body_data["target_user_id"], $user_group_data, $other_user_data);
 
         if ($other_user_data["permission_level"] >= $user_group_data["permission_level"]) {
             throw new BadRequestException([], "You can't update the permissions of someone with higher or same permissions than you");
@@ -241,7 +253,6 @@ class GroupController extends Controller {
         ]);
     }
 
-
     public function getUserGroupData(array $route_params) {
         $user_group_data = $this->group_gateway->getUserGroupData($route_params["user_id"]);
         if (empty($user_group_data)) {
@@ -252,5 +263,23 @@ class GroupController extends Controller {
             "message" => "Got user group data successfully",
             "data" => $user_group_data
         ]);
+    }
+
+    protected function update_permission_validations(int $user_id, int $target_user_id, array $user_group_data, array $other_user_data) {
+        if (empty($user_group_data)) {
+            throw new BadRequestException([], "You must be in a group to update user permissions");
+        }
+
+        if ($target_user_id == $user_id) {
+            throw new BadRequestException([], "You can't update your own permissions");
+        }
+
+        if (empty($other_user_data)) {
+            throw new BadRequestException([], "The target user must be in a group too");
+        }
+
+        if ($other_user_data["id_group"] != $user_group_data["id_group"]) {
+            throw new BadRequestException([], "The target user must be in the same group as you");
+        }
     }
 }

@@ -28,6 +28,7 @@ CREATE TABLE Patrols (
 CREATE TABLE Users (
     id INT PRIMARY KEY AUTO_INCREMENT,
     reg CHAR(8) NOT NULL UNIQUE,
+    email VARCHAR(8) NOT NULL,
     username VARCHAR(32) NOT NULL,
     password VARCHAR(127) NOT NULL,
     name VARCHAR(255) NOT NULL
@@ -77,6 +78,25 @@ CREATE TABLE Patrol_Integrantes (
     status ENUM("Ativo", "Inativo") DEFAULT "Ativo",
     FOREIGN KEY (id_patrol) REFERENCES Patrols(id) ON DELETE CASCADE,
     FOREIGN KEY (id_user) REFERENCES Users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE Transfer_Requests (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    id_user INT NOT NULL, -- Usuário que vai ser transferido
+    id_assignee_user INT NOT NULL, -- Usuário que fez a transferência
+
+    -- Esses ids podem ser nulos, já que nem sempre o usuário vai ser transferido
+    -- para todos eles ao mesmo tempo, exemplo, vou mudar de tropa, mas não vou mudar de grupo
+    -- ou vou mudar de tropa em outro estado, então vou ter que mudar de grupo também
+    id_group INT, -- Id do grupo que o usuário vai ser transferido
+    id_troup INT, -- Id da tropa que o usuário vai ser transferido
+    id_patrol INT, -- Id da patrulha que o usuário vai ser transferido
+
+    FOREIGN KEY (id_group) REFERENCES Groups(id) ON DELETE SET NULL,
+    FOREIGN KEY (id_troup) REFERENCES Troups(id) ON DELETE SET NULL,
+    FOREIGN KEY (id_patrol) REFERENCES Patrols(id) ON DELETE SET NULL,
+    FOREIGN KEY (id_user) REFERENCES Users(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_assignee_user) REFERENCES Users(id) ON DELETE CASCADE
 );
 
 

@@ -74,6 +74,24 @@ class AuthGateway extends BaseGateway {
         return password_verify($password, $result["password"]);
     }
 
+    public function validateUserCredentialsId(int $id, string $password): bool {
+        $sql = "SELECT password FROM Users
+                WHERE 
+                    id = :id";
+        
+        $stmt = $this->conn->prepare($sql);
+
+        $stmt->bindValue(":id", $id, PDO::PARAM_INT);
+
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($result == false) {
+            return false;
+        }
+        
+        return password_verify($password, $result["password"]);
+    }
+
     public function clearSessions(string $user_id) {
         $sql = "DELETE FROM active_sessions
                 WHERE user_id = :user_id";

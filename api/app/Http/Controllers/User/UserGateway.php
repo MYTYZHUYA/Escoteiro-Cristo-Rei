@@ -52,15 +52,16 @@ class UserGateway extends BaseGateway {
         return is_bool($result) ? [] : $result;
     }
 
-    public function createAccount(string $reg, string $password, string $username, string $name): array {
-        $sql = "INSERT INTO users (reg, name, username, password)
-                VALUES (:reg, :name, :username, :password)";
+    public function createAccount(string $reg, string $email, string $password, string $username, string $name): array {
+        $sql = "INSERT INTO users (reg, email, name, username, password)
+                VALUES (:reg, :email, :name, :username, :password)";
         
         $stmt = $this->conn->prepare($sql);
 
         $stmt->bindValue(":reg", $reg, PDO::PARAM_STR);
         $stmt->bindValue(":name", $name, PDO::PARAM_STR);
         $stmt->bindValue(":username", $username, PDO::PARAM_STR);
+        $stmt->bindValue(":email", $email, PDO::PARAM_STR);
         $stmt->bindValue(":password", password_hash($password, PASSWORD_DEFAULT), PDO::PARAM_STR);
         
         $stmt->execute();
@@ -69,7 +70,7 @@ class UserGateway extends BaseGateway {
         ];
     }
 
-    public function updateAccountData(int $user_id, string $password, string $username, string $name) : array {
+    public function updateAccountData(int $user_id, string $email, string $password, string $username, string $name) : array {
         $sql = "UPDATE Users
                 SET name = :name, username = :username, password = :password
                 WHERE id = :user_id";
@@ -78,6 +79,7 @@ class UserGateway extends BaseGateway {
 
         $stmt->bindValue(":name", $name, PDO::PARAM_STR);
         $stmt->bindValue(":username", $username, PDO::PARAM_STR);
+        $stmt->bindValue(":email", $email, PDO::PARAM_STR);
         $stmt->bindValue(":password", password_hash($password, PASSWORD_DEFAULT), PDO::PARAM_STR);
         $stmt->bindValue(":user_id", $user_id, PDO::PARAM_INT);
         

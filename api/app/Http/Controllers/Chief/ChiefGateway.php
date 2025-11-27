@@ -32,8 +32,8 @@ class ChiefGateway extends UserGateway {
     }
 
     // TODO: Atualizar as informações específicas do chefe aqui
-    public function updateAccountData(int $id_user, string $password, string $username, string $name) : array {
-        parent::updateAccountData($id_user, $password, $username, $name);
+    public function updateAccountData(int $id_user, string $email, string $password, string $username, string $name) : array {
+        parent::updateAccountData($id_user, $email, $password, $username, $name);
         
         $sql = "UPDATE Chefia
                 SET 
