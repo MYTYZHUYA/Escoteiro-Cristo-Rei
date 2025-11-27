@@ -6,6 +6,8 @@ require_once __DIR__ . "/../Auth/AuthGateway.php";
 use App\Helpers\JwtManager\JwtManager;
 use App\Http\Controllers\Controller;
 
+
+
 abstract class BaseTeam extends Controller implements TeamInterface { 
     protected AuthGateway $auth_gateway;
     protected BaseTeamGateway $team_gateway;
@@ -174,6 +176,46 @@ abstract class BaseTeam extends Controller implements TeamInterface {
 
         if ($other_user_data["id_team"] != $user_team_data["id_team"]) {
             throw new BadRequestException([], "The target user must be in the same team as you");
+        }
+    }
+
+    protected function validate_able_to_create_team(array $body_data, array $token_data) {
+        if (!empty($this->team_gateway->getUserTeamData($token_data["user_id"]))) {
+            throw new BadRequestException([], "You can't create a troup if you are already in one");
+        }
+
+        if ($this->team_gateway->checkTeamExists($body_data["name"])) {
+            throw new DuplicateEntityException([], "Another troup already took this name");
+        }
+    }
+
+    protected function validate_update_team_permissions(array $user_team_data) {
+        if (empty($user_team_data)) {
+            throw new BadRequestException([], "You must be in a team to update it");
+        }
+
+        $permissions = new TeamPermissions($user_team_data["permission_level"]);
+        if (!$permissions->UPDATE_PERMISSION) {
+            throw new UnauthorizedException([], "You don't have permission to update this team");
+        }
+    }
+
+    protected function update_team_check_changed(array $body_data, array $team_data) {
+        $changed = false;
+        foreach (array_keys($team_data) as $key) {
+            if (!array_key_exists($key, $body_data)) {
+                continue;
+            }
+
+            if (!$changed && $team_data[$key] != $body_data[$key]) {
+                $changed = true;
+            }
+            $team_data[$key] = $body_data[$key];
+        }
+        if (!$changed) {
+            // http_response_code(204);
+            echo json_encode(["message" => "No data was changed"]);
+            return;
         }
     }
 }

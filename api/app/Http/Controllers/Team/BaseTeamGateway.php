@@ -2,6 +2,31 @@
 
 use App\Http\Middleware\BaseGateway;
 
+class UserTeamStatus {
+    public const ACTIVE = "Ativo";
+    public const INACTIVE = "Inativo";
+}
+
+// TODO: Mudar isso aqui para ser permissões que podem ser atribuídas à usuários ou cargos (tipo o Discord)
+class PermissionLevels {
+    public const USER = 0;
+    public const MOD = 1;
+    public const OWNER = 2;
+
+    public const TEAM_UPDATE_THRESHOLD = 2;
+    public const TEAM_DELETE_THRESHOLD = 2;
+}
+
+class TeamPermissions {
+    public bool $UPDATE_PERMISSION = false;
+    public bool $DELETE_PERMISSION = false;
+
+    public function __construct(int $permission_level) {
+        $this->UPDATE_PERMISSION = $permission_level >= PermissionLevels::TEAM_UPDATE_THRESHOLD;
+        $this->DELETE_PERMISSION = $permission_level >= PermissionLevels::TEAM_DELETE_THRESHOLD;
+    }
+}
+
 abstract class BaseTeamGateway extends BaseGateway implements TeamGatewayInterface {
     protected const TARGET_TABLE = "Teams";
     protected const TARGET_TABLE_REFERENCE = "id_team";
@@ -23,7 +48,7 @@ abstract class BaseTeamGateway extends BaseGateway implements TeamGatewayInterfa
 
         $stmt->execute();
     }
-    
+
     public function joinTeam(int $team_id, int $user_id, int $permission_level) {
         $sql = "INSERT INTO {$this->target_table}_Integrantes ({$this->target_table_ref}, id_user, permission_level)
                 VALUES (:id_team, :id_user, :permission_level)";
