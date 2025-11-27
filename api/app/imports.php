@@ -38,10 +38,15 @@ require __DIR__ . "/Internals/ErrorHandler.php";
 
 require __DIR__ . "/Routing/Router.php";
 
+// Interfaces
+require __DIR__ . "/Http/Controllers/Team/TeamInterface.php";
+require __DIR__ . "/Http/Controllers/Team/TeamGatewayInterface.php";
+
 // Middleware
 
 require __DIR__ . "/Http/Middleware/BaseGateway.php";
 require __DIR__ . "/Http/Controllers/Auth/AuthGateway.php";
+
 
 // Controllers
 

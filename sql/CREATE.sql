@@ -52,7 +52,7 @@ CREATE TABLE Chefia (
 -- 0 -> integrante
 -- 1 -> Chefia (moderador)
 -- 2 -> Dono
-CREATE TABLE Grupo_Integrantes (
+CREATE TABLE Groups_Integrantes (
     id_group INT NOT NULL,    
     id_user INT NOT NULL UNIQUE,
     permission_level INT DEFAULT 0, 
@@ -61,7 +61,7 @@ CREATE TABLE Grupo_Integrantes (
     FOREIGN KEY (id_user) REFERENCES Users(id) ON DELETE CASCADE
 );
 
-CREATE TABLE Troup_Integrantes (
+CREATE TABLE Troups_Integrantes (
     id_troup INT NOT NULL,    
     id_user INT NOT NULL UNIQUE,
     permission_level INT DEFAULT 0, 
@@ -71,7 +71,7 @@ CREATE TABLE Troup_Integrantes (
 );
 
 -- Revisar essa tag UNIQUE
-CREATE TABLE Patrol_Integrantes (
+CREATE TABLE Patrols_Integrantes (
     id_patrol INT NOT NULL,    
     id_user INT NOT NULL UNIQUE,
     permission_level INT DEFAULT 0, 
