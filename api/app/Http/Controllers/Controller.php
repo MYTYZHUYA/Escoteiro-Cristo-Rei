@@ -17,7 +17,7 @@ class Controller extends BaseController {
     protected function checkFieldLengths(array $fields, array $data): array {
         $errors = [];
         foreach (array_keys($fields) as $field) {
-            if (!array_key_exists($field, array: $data)) {
+            if (!array_key_exists($field, $data)) {
                 continue;
             }
 

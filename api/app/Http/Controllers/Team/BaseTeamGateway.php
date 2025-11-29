@@ -30,12 +30,21 @@ class TeamPermissions {
 abstract class BaseTeamGateway extends BaseGateway implements TeamGatewayInterface {
     protected const TARGET_TABLE = "Teams";
     protected const TARGET_TABLE_REFERENCE = "id_team";
+
+    protected const SUPER_TABLE = "super_team";
+    protected const SUPER_ID_REFERENCE = "id_super_team";
+
     protected string $target_table = "";
     protected string $target_table_ref = "";
+    
+    protected string $super_table = "";
+    protected string $super_id_ref = "";
 
     public function __construct() {
         $this->target_table = $this::TARGET_TABLE;
         $this->target_table_ref = $this::TARGET_TABLE_REFERENCE;
+        $this->super_table = $this::SUPER_TABLE;
+        $this->super_id_ref = $this::SUPER_ID_REFERENCE;
         return parent::__construct();
     }
 
@@ -163,4 +172,18 @@ abstract class BaseTeamGateway extends BaseGateway implements TeamGatewayInterfa
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return is_bool($result) ? [] : $result;
     }
+
+    public function getTeamHierarchyData(int $team_id): array {
+        $sql = "SELECT {$this->super_id_ref} 
+                FROM {$this->target_table}
+                WHERE id = :team_id";
+
+        $stmt = $this->conn->prepare($sql);
+
+        $stmt->bindValue(":team_id", $team_id, PDO::PARAM_INT);
+        
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return is_bool($result) ? [] : $result;
+    }  
 }

@@ -40,7 +40,7 @@ CREATE TABLE Users (
 
 CREATE TABLE Chefia (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    id_user INT NOT NULL, -- A chefia também pode ser interpretada como usuário
+    id_user INT NOT NULL UNIQUE, -- A chefia também pode ser interpretada como usuário
     -- Informações adicionais necessárias
 
     FOREIGN KEY (id_user) REFERENCES Users(id) ON DELETE CASCADE
@@ -168,6 +168,7 @@ CREATE TABLE User_Badges (
     CONSTRAINT FK_current_badge_level_id FOREIGN KEY (id_level) REFERENCES Badge_Levels(id) ON DELETE SET NULL
 );
 
+-- Session Related
 CREATE TABLE active_sessions (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
@@ -176,4 +177,27 @@ CREATE TABLE active_sessions (
     expires_at DATETIME,
     UNIQUE (token_hash),
     FOREIGN KEY (user_id) REFERENCES Users(id)
+);
+
+-- Event Related
+CREATE TABLE Events (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    banner_url VARCHAR(255),
+
+    start_date DATE NOT NULL DEFAULT NOW(),
+    finish_date DATE,
+
+    description TEXT NOT NULL,
+    title VARCHAR(127)
+);
+
+-- TODO: Implementar ramo (lobinho, escoteiro, etc) depois
+CREATE TABLE Event_Target (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    id_event INT NOT NULL,
+    id_group INT,
+    id_troup INT,
+    FOREIGN KEY (id_event) REFERENCES Events(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_group) REFERENCES Groups(id) ON DELETE SET NULL,
+    FOREIGN KEY (id_troup) REFERENCES Troups(id) ON DELETE SET NULL,
 );
