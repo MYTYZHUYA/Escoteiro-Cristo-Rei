@@ -52,7 +52,7 @@ class UserGateway extends BaseGateway {
         return is_bool($result) ? [] : $result;
     }
 
-    public function createAccount(string $reg, string $email, string $password, string $username, string $name): array {
+    public function createAccount(string $reg, string $email, string $profile_url, string $password, string $username, string $name): array {
         $sql = "INSERT INTO users (reg, email, name, username, password)
                 VALUES (:reg, :email, :name, :username, :password)";
         
@@ -62,6 +62,7 @@ class UserGateway extends BaseGateway {
         $stmt->bindValue(":name", $name, PDO::PARAM_STR);
         $stmt->bindValue(":username", $username, PDO::PARAM_STR);
         $stmt->bindValue(":email", $email, PDO::PARAM_STR);
+        $stmt->bindValue(":profile_url", $profile_url, PDO::PARAM_STR);
         $stmt->bindValue(":password", password_hash($password, PASSWORD_DEFAULT), PDO::PARAM_STR);
         
         $stmt->execute();
@@ -70,15 +71,16 @@ class UserGateway extends BaseGateway {
         ];
     }
 
-    public function updateAccountData(int $user_id, string $email, string $password, string $username, string $name) : array {
+    public function updateAccountData(int $user_id, string $email, string $profile_url, string $password, string $username, string $name) : array {
         $sql = "UPDATE Users
-                SET name = :name, username = :username, password = :password
+                SET name = :name, username = :username, password = :password, profile_url = :profile_url, email = :email
                 WHERE id = :user_id";
         
         $stmt = $this->conn->prepare($sql);
 
         $stmt->bindValue(":name", $name, PDO::PARAM_STR);
         $stmt->bindValue(":username", $username, PDO::PARAM_STR);
+        $stmt->bindValue(":profile_url", $profile_url, PDO::PARAM_STR);
         $stmt->bindValue(":email", $email, PDO::PARAM_STR);
         $stmt->bindValue(":password", password_hash($password, PASSWORD_DEFAULT), PDO::PARAM_STR);
         $stmt->bindValue(":user_id", $user_id, PDO::PARAM_INT);

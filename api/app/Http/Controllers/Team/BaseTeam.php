@@ -94,7 +94,7 @@ abstract class BaseTeam extends Controller implements TeamInterface {
         }
 
         $this->team_gateway->updateUserPermission($team_data["id"], $token_data["user_id"], PermissionLevels::MOD);
-        $this->team_gateway->updateUserPermission($team_data["id"], $body_data["target_user_id"], permission_level: PermissionLevels::OWNER);
+        $this->team_gateway->updateUserPermission($team_data["id"], $body_data["target_user_id"], PermissionLevels::OWNER);
         echo json_encode([
             "message" => "Transferred ownership to user (id: {$body_data['target_user_id']}) successfully"
         ]);

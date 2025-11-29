@@ -28,7 +28,7 @@ class UserController extends Controller {
             throw new DuplicateEntityException([], "User already exists");
         }
 
-        $user_data = $this->gateway->createAccount($body_data["reg"], $body_data["email"], $body_data["password"], $body_data["username"], $body_data["name"]);
+        $user_data = $this->gateway->createAccount($body_data["reg"], $body_data["email"], $body_data["profile_url"], $body_data["password"], $body_data["username"], $body_data["name"]);
         return $user_data;
     }
 
@@ -86,6 +86,7 @@ class UserController extends Controller {
         $account_data = $this->gateway->updateAccountData(
             $token_data["user_id"],
             $body_data["email"],
+            $body_data["profile_url"],
             $body_data["password"],
             $body_data["username"],
             $body_data["name"],

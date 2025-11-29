@@ -31,7 +31,8 @@ CREATE TABLE Users (
     email VARCHAR(8) NOT NULL,
     username VARCHAR(32) NOT NULL,
     password VARCHAR(127) NOT NULL,
-    name VARCHAR(255) NOT NULL
+    name VARCHAR(255) NOT NULL,
+    profile_url VARCHAR(255)
     -- por algum motivo não funciona:
     -- CONSTRAINT CK_LEN_username CHECK LEN(username) >= 4,
     -- CONSTRAINT CK_LEN_password CHECK LEN(password) >= 6
