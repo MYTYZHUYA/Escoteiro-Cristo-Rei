@@ -15,6 +15,43 @@ class EventController extends Controller {
         $this->event_gateway = new EventGateway();
     }
 
+    public function getEventData(array $route_params) {
+        if (!$this->event_gateway->eventExistsId($route_params["id_event"])) {
+            throw new EntityNotFoundException([], "Couldn't find an event with this id");
+        }
+
+        $data = $this->event_gateway->getEventData($route_params["id_event"]);
+        echo json_encode([
+            "message" => "Got event data successfully",
+            "data" => $data
+        ]);
+    }
+
+    public function deleteEvent(array $body_data, array $route_params, string $auth_token) {
+        $jwt = new JwtManager(getenv("SECRET_KEY"));
+        $token_data = $jwt->decodeToken($auth_token);
+        if (!$this->event_gateway->userCanCreateEvent($token_data["user_id"])) {
+            throw new UnauthorizedException([], "To delete an event you must be a chief");
+        }
+
+        if (!$this->event_gateway->eventExistsId($route_params["id_event"])) {
+            throw new EntityNotFoundException([], "Couldn't find event of id {$route_params['id_event']}");
+        }
+
+        $event_data = $this->event_gateway->getEventData($route_params["id_event"]);
+        if ($event_data["title"] != $body_data["title"]) {
+            throw new UnauthorizedException([], "The Event Title must be exactly the same as the Event's title");
+        }
+
+        $this->event_gateway->deleteEvent(
+            $route_params["id_event"]
+        );
+
+        echo json_encode([
+            "message" => "Deleted event sucessfully",
+        ]);
+    }
+
     public function createEvent(array $body_data, string $auth_token) {
         $this->checkFieldLengths([
             "title" => [6, 128],
@@ -111,6 +148,8 @@ class EventController extends Controller {
             throw new BadRequestException([], "You must add at least one team id to target");
         }
 
+        // TODO: Add handling for duplicate entry and bad entry (troup that isn't from group)
+
         if (array_key_exists("id_group", $body_data)){
             $this->group_gateway = new GroupGateway();
             if (!$this->group_gateway->checkTeamExistsId($body_data["id_group"])) {
@@ -125,14 +164,35 @@ class EventController extends Controller {
             }
         } else { $body_data["id_troup"] = null; }
         
-        $this->event_gateway->assignEventTarget(
+        $id = $this->event_gateway->assignEventTarget(
             $route_params["id_event"],
             $body_data["id_group"],
             $body_data["id_troup"],
         );
 
         echo json_encode([
-            "message" => "Added targets to event ({$route_params['id_event']})"
+            "message" => "Added targets to event ({$route_params['id_event']})",
+            "target_id" => $id
+        ]);
+    }
+
+    public function getEventTargets(array $route_params) {
+        if (!$this->event_gateway->eventExistsId($route_params["id_event"])) {
+            throw new EntityNotFoundException([], "Couldn't find an event with this id");
+        }
+
+        $targets = $this->event_gateway->getEventTargets($route_params["id_event"]);
+        $unified_targets = [];
+        foreach ($targets as $target_key => $target) {
+            if (!array_key_exists($target_key, $unified_targets)) {
+                $unified_targets[$target_key] = [];
+            }
+            $unified_targets[$target_key][] = $target;
+        }
+
+        echo json_encode([
+            "message" => "Got event targets successfully",
+            "targets" => $unified_targets
         ]);
     }
 }
