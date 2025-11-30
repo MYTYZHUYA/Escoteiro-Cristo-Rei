@@ -1,11 +1,13 @@
 /* Tipografia e fundo */
 body{
   font-family: "Segoe UI", Roboto, Arial, Helvetica, sans-serif;
-  background: linear-gradient(180deg,#fffdf5 0%, #FFFFE3 60%);
   color: #222;
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
   line-height: 1.45;
+  background-image: url(../img/01-as-paisagens-naturais-mais-lindas-do-brasil-floresta-amazonica2-min\.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 
@@ -15,21 +17,22 @@ body{
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(180deg,#fffdf5 0%, #FFFFE3 60%);
   /* Espaço reservado para imagem de fundo dos escoteiros */
   /* background-image: url('img/escoteiros-bg.jpg'); */
   /* background-size: cover; */
   /* background-position: center; */
 }
 
+
 .login-modal {
   background-color: #fff;
   padding: 2rem;
-  border-radius: 12px;
   box-shadow: 0 12px 28px rgba(0,0,0,0.1);
   max-width: 400px;
   width: 90%;
   text-align: center;
+  display: flex;
+  flex-direction: column;
 }
 
 .login-modal h1 {
@@ -55,9 +58,17 @@ body{
   border: 1px solid #ddd;
   border-radius: 6px;
   font-size: 1rem;
+  border: none; border-bottom: 2px solid #ccc; 
+  padding: 8px 0; 
+  font-size: 16px; 
+  width: 100%; 
+  box-sizing: border-box; 
+  margin-bottom: 20px; 
+  outline: none;
+  border-radius: 0%;
 }
 
-.login-modal button {
+.login-button{
   background: #ff6a1a;
   color: #fff;
   padding: 0.75rem;
@@ -69,8 +80,30 @@ body{
   transition: background 0.2s;
 }
 
-.login-modal button:hover {
+.login-button:hover {
   background: #e55a0f;
+}
+
+.botao-voltar {
+  margin-right: auto;
+  background: white;
+  color: black;
+  height: 60px;
+  width: 60px;
+  border: none;
+  cursor: pointer;
+
+  p {
+    height: 50px;
+    line-height: 45px;
+    margin: 0;
+    text-align: center;
+  }
+}
+
+.botao-voltar :hover {
+  transition: all 100ms;  
+  background: #c4c4c4;
 }
 
 .login-modal .error {
@@ -78,6 +111,14 @@ body{
   font-size: 0.9rem;
   margin-top: 0.5rem;
 }
+
+.login-titulo {
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  display: flex;
+}
+
 
 /* Responsividade login */
 @media (max-width: 768px) {
