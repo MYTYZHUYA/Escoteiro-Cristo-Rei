@@ -4,42 +4,66 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Página do Usuário - G.E. Cristo-Rei</title>
+    <link rel="stylesheet" href="css/style.css"/>
     <link rel="stylesheet" href="css/user_page.css" />
 </head>
 <body>
     <header class="barra-navegacao">
-        <img src="img/logo.png" alt="Logotipo G.E. Cristo-Rei">
-        <nav class="links-navegacao">
-            <a href="index.html"></a>
-        </nav>
+        <a href="index.html">
+            <img src="img/logo.png" alt="Logotipo G.E. Cristo-Rei">
+        </a>
         <div class="botao-login">
             <a href="#" onclick="logout()">Logout</a>
         </div>
     </header>
 
-    <main>
-        <button class="eventos"><img src="img/eventos_img.png" alt="">Eventos</button>
-        <button class="atividades"> <img src="img/atividades_img.png" alt="">Atividades</button>
-        <button class="atas"><img src="img/atas_img.png" alt="">Atas </button>
-        <button class="config"> <img src="img/Setting.png" alt="">Configurações</button>  
-       
-    </main>
-
-    <aside>
-        
-    </aside>
-
-    <footer class="rodape">
-        <div class="rodape-interno">
-            <div class="marca-rodape">
-                <img src="img/logo.png" alt="Logotipo G.E. Cristo-Rei" class="logo-rodape">
-                <div class="texto-marca">
-                    <h3>G.E. Cristo‑Rei</h3>
-                    <p>Escotismo que forma cidadãos, promove serviço e constrói comunidade.</p>
-                </div>
+    <div class="sidebar">
+        <div class="sidebar-content">
+            <ul class="sidebar-items">
+                <a href="#">
+                    <li class="sidebar-tab">
+                        <img src="/public/img/calendar.svg" alt="Eventos"><span class="sidebar-tab-label">Eventos</span>
+                    </li>
+                </a>
+                <a href="#">
+                    <li class="sidebar-tab">
+                        <img src="/public/img/camp.svg" alt="Atividades"><span class="sidebar-tab-label">Atividades</span>
+                    </li>
+                </a>
+                <a href="#">
+                    <li class="sidebar-tab">
+                        <img src="/public/img/document.svg" alt="Atas"><span class="sidebar-tab-label">Atas</span>
+                    </li>
+                </a>
+            </ul>
+            
+            <div class="sidebar-split">
+                <h2 class="sidebar-split-title">Grupo:</h2>
+                <ul class="sidebar-items">
+                    <a href="#">
+                        <li class="sidebar-item">
+                            <img src="/public/img/profile-placholder.svg" alt="Perfil"><span>Integrante 1</span>
+                        </li>
+                    </a>
+                    <a href="#">
+                        <li class="sidebar-item">
+                            <img src="/public/img/profile-placholder.svg" alt="Perfil"><span>Integrante 2</span>
+                        </li>
+                    </a>
+                    <a href="#">
+                        <li class="sidebar-item">
+                            <img src="/public/img/profile-placholder.svg" alt="Perfil"><span>Integrante 3</span>
+                        </li>
+                    </a>
+                </ul>
             </div>
+            <a href="#" style="margin-top: auto;">
+                <div class="settings-button">
+                    <img src="/public/img/Setting.png" alt="Settings"><span>Configurações</span>
+                </div>
+            </a>
         </div>
-    </footer>
+    </div>
 
     <script>
     function logout() {
