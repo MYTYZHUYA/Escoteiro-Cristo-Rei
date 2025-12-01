@@ -17,7 +17,7 @@
     color: #000;
   }
 
-  * {
+  .sidebar-split {
     margin-bottom: 5px;
   }
 }
@@ -30,9 +30,13 @@
 
 .sidebar-items {
   list-style: none;
+  .sidebar-item, .sidebar-tab {
+    margin-bottom: 10px;
+  }
 }
 
 .sidebar-tab, .sidebar-item, .settings-button {
+  padding: 5px;
   display: flex;
   align-items: center;
   img {
@@ -42,6 +46,11 @@
   span {
     font-size: 18px;
   }
+}
+
+.selected-tab {
+  background-color: #873f3f57;
+  border-left: #501A17 5px solid;
 }
 
 .main-content {
