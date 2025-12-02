@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Página do Usuário - G.E. Cristo-Rei</title>
+    <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="css/user_page.css" />
+</head>
+<body>
+    <header class="barra-navegacao">
+        <a href="index.html">
+            <img src="img/logo.png" alt="Logotipo G.E. Cristo-Rei">
+        </a>
+        <div class="botao-login">
+            <a href="#" onclick="logout()">Logout</a>
+        </div>
+    </header>
+
+    <div class="page-content">
+        <div class="sidebar">
+            <div class="sidebar-content">
+                <div class="sidebar-split">
+                    <ul class="sidebar-items">
+                        <a href="events.html">
+                            <li class="sidebar-tab selected-tab">
+                                <img src="/public/img/calendar.svg" alt="Eventos"><span class="sidebar-tab-label">Eventos</span>
+                            </li>
+                        </a>
+                        <a href="activities.html">
+                            <li class="sidebar-tab">
+                                <img src="/public/img/camp.svg" alt="Atividades"><span class="sidebar-tab-label">Atividades</span>
+                            </li>
+                        </a>
+                        <a href="atas.html">
+                            <li class="sidebar-tab">
+                                <img src="/public/img/document.svg" alt="Atas"><span class="sidebar-tab-label">Atas</span>
+                            </li>
+                        </a>
+                    </ul>
+                </div>
+                
+                <div class="sidebar-split">
+                    <h2 class="sidebar-split-title">Grupo:</h2>
+                    <ul class="sidebar-items">
+                        <a href="#">
+                            <li class="sidebar-item">
+                                <img src="/public/img/profile-placholder.svg" alt="Perfil"><span>Integrante 1</span>
+                            </li>
+                        </a>
+                        <a href="#">
+                            <li class="sidebar-item">
+                                <img src="/public/img/profile-placholder.svg" alt="Perfil"><span>Integrante 2</span>
+                            </li>
+                        </a>
+                        <a href="#">
+                            <li class="sidebar-item">
+                                <img src="/public/img/profile-placholder.svg" alt="Perfil"><span>Integrante 3</span>
+                            </li>
+                        </a>
+                    </ul>
+                </div>
+                
+                <a href="#" style="margin-top: auto;">
+                    <div class="settings-button">
+                        <img src="/public/img/Setting.png" alt="Settings"><span>Configurações</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    
+        <main class="main-content">
+            <div class="events">
+                <div class="event-section">
+                    <div class="big-event">
+                        <div class="event-banner-holder">
+                            <img class="event-banner" src="/public/img/banners/cacada-nacional.png" alt="Banner do Evento">
+                            <span class="event-date">01/01/01</span>
+                        </div>
+                        <div class="event-info">
+                            <h2 class="event-title">Nome do evento legal</h2>
+                            <p class="event-description">Descrição do evento legal</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="event-section">
+                    <div class="medium-event">
+                        <div class="event-banner-holder">
+                            <img class="event-banner" src="/public/img/banners/encontro-nacional.png" alt="Banner do Evento">
+                            <span class="event-date">01/01/01</span>
+                        </div>
+                        <div class="event-info">
+                            <h2 class="event-title">Nome do evento legal</h2>
+                            <p class="event-description">Descrição do evento legal</p>
+                        </div>
+                    </div>
+                    <div class="medium-event">
+                        <div class="event-banner-holder">
+                            <img class="event-banner" src="/public/img/banners/jota-joti.png" alt="Banner do Evento">
+                            <span class="event-date">01/01/01</span>
+                        </div>
+                        <div class="event-info">
+                            <h2 class="event-title">Nome do evento legal</h2>
+                            <p class="event-description">Descrição do evento legal</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function logout() {
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
