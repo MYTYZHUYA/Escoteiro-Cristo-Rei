@@ -73,6 +73,24 @@
   justify-content: space-between;
 }
 
+.event-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.event-detail {
+  display: flex;
+  flex-direction: column;
+  .event-banner {
+    width: 100%;
+    border-radius: 0;
+  }
+
+  .event-title {
+    text-align: center;
+  }
+}
+
 .big-event, .medium-event {
   background-color: #fff;
   border-radius: 16px;
@@ -115,5 +133,5 @@
 }
 
 .event-description {
-  text-justify: justify;
+  text-align: justify;
 }
