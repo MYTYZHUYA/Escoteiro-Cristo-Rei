@@ -238,8 +238,8 @@ body{
 /* cada slide ocupa 100% */
 .faixa-carrossel img{
   flex: 0 0 100%;
-  width: 100%;
-  height: clamp(260px, 36vh, 520px);
+  width: 100px;
+  /* height: clamp(260px, 36vh, 520px); */
   object-fit: cover;
   display:block;
 }
@@ -273,7 +273,6 @@ body{
   gap:10px;
   justify-content:center;
   padding: 10px;
-  margin-top: 300px;
 }
 .indicador{
   width: 12px;
@@ -291,6 +290,7 @@ body{
 .painel-texto{
   flex: 0 1 clamp(260px, 36%, 420px);
   padding: clamp(16px, 2.6vw, 36px);
+  margin-bottom: auto;
   display:flex;
   flex-direction: column;
   gap: clamp(8px, 1.2vw, 16px);
