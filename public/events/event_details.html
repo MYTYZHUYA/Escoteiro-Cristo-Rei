@@ -4,9 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Página do Usuário - G.E. Cristo-Rei</title>
+    <base href="../">
     <link rel="stylesheet" href="css/style.css"/>
     <link rel="stylesheet" href="css/user_page.css" />
-    <link rel="stylesheet" href="css//user/atas.css" />
+    <link rel="stylesheet" href="css/user/events.css" />
 </head>
 <body>
     <header class="barra-navegacao">
@@ -24,7 +25,7 @@
                 <div class="sidebar-split">
                     <ul class="sidebar-items">
                         <a href="events.html">
-                            <li class="sidebar-tab">
+                            <li class="sidebar-tab selected-tab">
                                 <img src="/public/img/calendar.svg" alt="Eventos"><span class="sidebar-tab-label">Eventos</span>
                             </li>
                         </a>
@@ -34,7 +35,7 @@
                             </li>
                         </a>
                         <a href="atas.html">
-                            <li class="sidebar-tab selected-tab">
+                            <li class="sidebar-tab">
                                 <img src="/public/img/document.svg" alt="Atas"><span class="sidebar-tab-label">Atas</span>
                             </li>
                         </a>
@@ -71,33 +72,17 @@
         </div>
     
         <main class="main-content">
-            <div class="atas">
-                <div class="ata-card">
-                    <div class="ata-info">
-                        <span>Ata nº: 00001</span>
-                        <span>ID ata: 1234-12-01-01-2025</span>
-                        <span>Data: 01/01/2025</span>
-                        <span>Instituição: Instituição G.E Cristo Rei</span>
-                        <span>Local: Marília/SP</span>
-                        <span>Pauta: Alguma Pauta</span>
-                    </div>
-                    <div class="ata-detail-button">
-                        <a href="/public/atas/ata-detail.html"><img src="/public/img/see-more.svg" alt=">"></a>
-                    </div>
-                </div>
-                <div class="ata-card">
-                    <div class="ata-info">
-                        <span>Ata nº: 00001</span>
-                        <span>ID ata: 1234-12-01-01-2025</span>
-                        <span>Data: 01/01/2025</span>
-                        <span>Instituição: Instituição G.E Cristo Rei</span>
-                        <span>Local: Marília/SP</span>
-                        <span>Pauta: Alguma Pauta</span>
-                    </div>
-                    <div class="ata-detail-button">
-                        <a href="/public/atas/ata-detail.html"><img src="/public/img/see-more.svg" alt=">"></a>
-                    </div>
-                </div>
+            <a href="/public/events.html" style="width: fit-content;"><img src="/public/img/go-back.svg" alt="Voltar"></a>
+            <div class="event-detail">
+                <img class="event-banner" src="/public/img/banners/cacada-nacional.png" alt="Banner do Evento">
+                <h3>Data do evento: 01/01/01</h3>
+                <h2 class="event-title">Nome do evento legal</h2>
+                <p class="event-description">
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Expedita cumque quia facilis iure, neque deleniti voluptate modi quo assumenda repellendus adipisci sit totam eius! Perspiciatis ea facere ducimus voluptatum aliquam.
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Expedita cumque quia facilis iure, neque deleniti voluptate modi quo assumenda repellendus adipisci sit totam eius! Perspiciatis ea facere ducimus voluptatum aliquam.
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Expedita cumque quia facilis iure, neque deleniti voluptate modi quo assumenda repellendus adipisci sit totam eius! Perspiciatis ea facere ducimus voluptatum aliquam.
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Expedita cumque quia facilis iure, neque deleniti voluptate modi quo assumenda repellendus adipisci sit totam eius! Perspiciatis ea facere ducimus voluptatum aliquam.
+                </p>
             </div>
         </main>
     </div>

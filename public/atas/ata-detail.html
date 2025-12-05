@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Página do Usuário - G.E. Cristo-Rei</title>
+    <base href="../">
     <link rel="stylesheet" href="css/style.css"/>
     <link rel="stylesheet" href="css/user_page.css" />
     <link rel="stylesheet" href="css//user/atas.css" />
@@ -71,31 +72,52 @@
         </div>
     
         <main class="main-content">
-            <div class="atas">
-                <div class="ata-card">
-                    <div class="ata-info">
-                        <span>Ata nº: 00001</span>
-                        <span>ID ata: 1234-12-01-01-2025</span>
-                        <span>Data: 01/01/2025</span>
-                        <span>Instituição: Instituição G.E Cristo Rei</span>
-                        <span>Local: Marília/SP</span>
-                        <span>Pauta: Alguma Pauta</span>
+            <a href="/public/atas.html" style="width: fit-content;"><img src="/public/img/go-back.svg" alt="Voltar"></a>
+            <div class="ata-details">
+                <div class="ata-info">
+                    <span>Ata nº: 00001</span>
+                    <span>ID ata: 1234-12-01-01-2025</span>
+                    <span>Data: 01/01/2025</span>
+                    <span>Instituição: Instituição G.E Cristo Rei</span>
+                    <span>Local: Marília/SP</span>
+                    <span>Pauta: Alguma Pauta</span>
+                </div>
+                <div class="ata-detail-section">
+                    <h2>Pautas</h2>
+                    <ul class="ata-pautas">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae, rem id, veniam officia quaerat enim unde impedit est a et expedita animi, odit illo! Dicta officia debitis ratione aperiam perspiciatis?</p>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae, rem id, veniam officia quaerat enim unde impedit est a et expedita animi, odit illo! Dicta officia debitis ratione aperiam perspiciatis?</p>
+                    </ul>
+                </div>
+                <div class="ata-detail-section">
+                    <h2>Expediente</h2>
+                    <div class="ata-detail-row">
+                        <span>Presentes:</span>
+                        <ul>
+                            <li>Alguém 1</li>
+                            <li>Alguém 2</li>
+                        </ul>
                     </div>
-                    <div class="ata-detail-button">
-                        <a href="/public/atas/ata-detail.html"><img src="/public/img/see-more.svg" alt=">"></a>
+                    <div class="ata-detail-row">
+                        <span>Ausentes:</span>
+                        <ul>
+                            <li>Alguém 3</li>
+                            <li>Alguém 4</li>
+                        </ul>
                     </div>
                 </div>
-                <div class="ata-card">
-                    <div class="ata-info">
-                        <span>Ata nº: 00001</span>
-                        <span>ID ata: 1234-12-01-01-2025</span>
-                        <span>Data: 01/01/2025</span>
-                        <span>Instituição: Instituição G.E Cristo Rei</span>
-                        <span>Local: Marília/SP</span>
-                        <span>Pauta: Alguma Pauta</span>
-                    </div>
-                    <div class="ata-detail-button">
-                        <a href="/public/atas/ata-detail.html"><img src="/public/img/see-more.svg" alt=">"></a>
+                <div class="ata-detail-section">
+                    <h2>Ordem do dia</h2>
+                    <ul>
+                        <li>Resumo das discussões e debates de cada ponto da pauta</li>
+                        <li>Votos e o resultado das decisões tomadas</li>
+                        <li>Novos compromissos, prazos e responsáveis</li>
+                    </ul>
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tenetur hic cum dolorum fugit reiciendis! Cum, optio sapiente nam eius molestiae ex ipsum quibusdam porro, numquam tempora recusandae voluptates architecto nesciunt.</p>
+                </div>
+                <div class="ata-detail-section">
+                    <div class="ata-detail-row">
+                        <h3>Horário de Encerramento: </h3><span>12:00</span>
                     </div>
                 </div>
             </div>
