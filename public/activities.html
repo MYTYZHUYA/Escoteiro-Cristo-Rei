@@ -10,6 +10,7 @@
 </head>
 <body>
     <header class="barra-navegacao">
+        <button class="open-sidebar-button" onclick="openNav()" id="sidebar-toggle"><img src="/public/img/menu.svg" alt="Menu"></button>
         <a href="index.html">
             <img src="img/logo.png" alt="Logotipo G.E. Cristo-Rei">
         </a>
@@ -19,7 +20,7 @@
     </header>
 
     <div class="page-content">
-        <div class="sidebar">
+        <div class="sidebar" id="sidebar">
             <div class="sidebar-content">
                 <div class="sidebar-split">
                     <ul class="sidebar-items">
@@ -111,6 +112,21 @@
     <script>
         function logout() {
             window.location.href = 'index.html';
+        }
+    </script>
+    <script>
+        let SidebarToggle = document.getElementById("sidebar-toggle");
+        function openNav() {
+            SidebarToggle.onclick = closeNav;
+            document.getElementById("sidebar").style.width = "250px";
+            document.getElementById("sidebar").style.display = "inherit";
+        }
+
+        function closeNav() {
+            SidebarToggle.onclick = openNav;
+            document.getElementById("sidebar").style.width = "0";
+            document.getElementById("sidebar").style.display = "none";
+            document.getElementById("main").style.marginLeft = "0";
         }
     </script>
 </body>

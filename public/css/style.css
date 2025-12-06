@@ -210,6 +210,7 @@ body{
 
 /* --- Seção carrossel --- */
 .secao-carrossel{
+  justify-content: space-evenly;
   display:flex;
   gap: clamp(20px, 4.5vw, 72px);
   align-items: stretch;
@@ -223,6 +224,8 @@ body{
   position: relative;
   flex: 1 1 clamp(320px, 58%, 70%);
   min-width: 280px;
+  height: fit-content;
+  max-width: 800px;
   overflow: hidden;
   border-radius: 14px;
   background: linear-gradient(180deg,#ffffff,#fbf9f5);
@@ -348,7 +351,7 @@ button:focus, a:focus { outline: 3px solid rgba(10,116,209,0.18); outline-offset
 }
 @media (max-width: 1100px){
   .imagem-principal img { max-width: 360px; }
-  .faixa-carrossel img { height: clamp(220px, 30vh, 420px); }
+  /* .faixa-carrossel img { height: clamp(220px, 30vh, 420px); } */
   .painel-texto h1{ font-size: clamp(16px, 2vw, 26px); }
   .resumo{ font-size: 15px; }
 }
