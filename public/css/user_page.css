@@ -7,6 +7,12 @@
   width: 100%;
 }
 
+.profile-buttons {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
 .page-content {
   position: absolute;
   width: 100%;
@@ -73,10 +79,12 @@
 
 .open-sidebar-button, .close-sidebar-button {
   background-color: transparent;
-  border: none;
+  border: 3px solid white;
+  border-radius: 16px;
 
   display: none;
 }
+
 
 .open-sidebar-button {
   img {
@@ -85,6 +93,11 @@
 }
 
 @media (max-width: 700px) {
+  .navbar-logo {
+    margin-right: auto;
+    align-items: center;
+  }
+
   .open-sidebar-button, .close-sidebar-button {
     display: inherit;
   }
@@ -95,7 +108,7 @@
 
   .main-content {
     margin: 0 auto;
-    margin-left: var(--sidebar-width);
+    /* margin-left: var(--sidebar-width); */
   }
 
   .sidebar {

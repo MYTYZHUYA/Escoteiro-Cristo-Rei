@@ -5,3 +5,6 @@
 - [ ] Create public/usuario.html: Placeholder user page.
 - [ ] Edit public/style.css: Add styles for login page and login modal.
 - [ ] Test the login functionality by opening login.html in browser.
+
+- [ ] Refazer o frontend inteiro (principalmente o /css/style.css)
+- [ ] Transição pro php (pelo amor de Deus eu não aguento mais ter que copiar e colar a navbar mano)

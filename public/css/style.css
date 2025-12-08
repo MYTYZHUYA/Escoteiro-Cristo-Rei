@@ -370,7 +370,7 @@ button:focus, a:focus { outline: 3px solid rgba(10,116,209,0.18); outline-offset
   .barra-navegacao img{ height: 48px; }
   .hamburger{ display: flex; }
   .links-navegacao{ display: none; }
-  .botao-login{ display: none; }
+  /* .botao-login{ display: none; } */
   .linha-botoes{ flex-direction: column; gap: 8px; align-items: stretch; }
   .botao-primario, .botao-secundario{ text-align: center; padding: 12px 16px; }
   .faixa-carrossel img{ height: clamp(200px, 25vh, 350px); }
@@ -460,4 +460,8 @@ button:focus, a:focus { outline: 3px solid rgba(10,116,209,0.18); outline-offset
   .modal-content {
     padding: 1rem;
   }
+}
+
+.navbar-logo {
+    display: flex;
 }
