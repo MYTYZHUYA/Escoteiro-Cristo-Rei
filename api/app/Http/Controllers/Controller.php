@@ -14,16 +14,20 @@ class ErrorCodes {
 }
 
 class Controller extends BaseController {
-    protected function checkFieldLengths(array $fields, array $correct_length, array $data): array {
+    protected function checkFieldLengths(array $fields, array $data): array {
         $errors = [];
-        for ($idx = 0; $idx < sizeof($fields); $idx++) {
-            if (strlen($data[$fields[$idx]]) < $correct_length[$idx][CorrectLengthFormat::$MINIMUM]) {
-                $errors[$fields[$idx]] = ErrorCodes::$FieldLengthTooSmall;
+        foreach (array_keys($fields) as $field) {
+            if (!array_key_exists($field, $data)) {
                 continue;
             }
 
-            if (strlen($data[$fields[$idx]]) > $correct_length[$idx][CorrectLengthFormat::$MAXIMUM]) {
-                $errors[$fields[$idx]] = ErrorCodes::$FieldLengthTooBig;
+            if (strlen($data[$field]) < $fields[$field][CorrectLengthFormat::$MINIMUM]) {
+                $errors[$field] = ErrorCodes::$FieldLengthTooSmall;
+                continue;
+            }
+
+            if (strlen($data[$field]) > $fields[$field][CorrectLengthFormat::$MAXIMUM]) {
+                $errors[$field] = ErrorCodes::$FieldLengthTooBig;
                 continue;
             }
         }

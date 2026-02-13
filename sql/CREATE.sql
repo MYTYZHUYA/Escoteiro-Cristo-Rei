@@ -5,7 +5,7 @@ USE EscoteirosCR;
 
 CREATE TABLE Groups (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    estado CHAR(2) NOT NULL,
+    state CHAR(2) NOT NULL,
     num INT NOT NULL,
     name VARCHAR(127) NOT NULL
 );
@@ -28,9 +28,11 @@ CREATE TABLE Patrols (
 CREATE TABLE Users (
     id INT PRIMARY KEY AUTO_INCREMENT,
     reg CHAR(8) NOT NULL UNIQUE,
+    email VARCHAR(8) NOT NULL,
     username VARCHAR(32) NOT NULL,
     password VARCHAR(127) NOT NULL,
-    name VARCHAR(255) NOT NULL
+    name VARCHAR(255) NOT NULL,
+    profile_url VARCHAR(255)
     -- por algum motivo não funciona:
     -- CONSTRAINT CK_LEN_username CHECK LEN(username) >= 4,
     -- CONSTRAINT CK_LEN_password CHECK LEN(password) >= 6
@@ -38,34 +40,64 @@ CREATE TABLE Users (
 
 CREATE TABLE Chefia (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    id_user INT NOT NULL, -- A chefia também pode ser interpretada como usuário
+    id_user INT NOT NULL UNIQUE, -- A chefia também pode ser interpretada como usuário
     -- Informações adicionais necessárias
 
     FOREIGN KEY (id_user) REFERENCES Users(id) ON DELETE CASCADE
 );
 
-CREATE TABLE Grupo_Integrantes (
+-- TODO: Apagar o grupo se ele não tiver mais integrantes (talvez)
+
+-- FIXME: Esse permission level é provisório, não tenho certeza se é ideal isso aí
+-- a ideia é ser tipo: 
+-- 0 -> integrante
+-- 1 -> Chefia (moderador)
+-- 2 -> Dono
+CREATE TABLE Groups_Integrantes (
     id_group INT NOT NULL,    
-    id_user INT NOT NULL,
+    id_user INT NOT NULL UNIQUE,
+    permission_level INT DEFAULT 0, 
     status ENUM("Ativo", "Inativo") DEFAULT "Ativo",
     FOREIGN KEY (id_group) REFERENCES Groups(id) ON DELETE CASCADE,
     FOREIGN KEY (id_user) REFERENCES Users(id) ON DELETE CASCADE
 );
 
-CREATE TABLE Troup_Integrantes (
+CREATE TABLE Troups_Integrantes (
     id_troup INT NOT NULL,    
-    id_user INT NOT NULL,
+    id_user INT NOT NULL UNIQUE,
+    permission_level INT DEFAULT 0, 
     status ENUM("Ativo", "Inativo") DEFAULT "Ativo",
     FOREIGN KEY (id_troup) REFERENCES Troups(id) ON DELETE CASCADE,
     FOREIGN KEY (id_user) REFERENCES Users(id) ON DELETE CASCADE
 );
 
-CREATE TABLE Patrol_Integrantes (
+-- Revisar essa tag UNIQUE
+CREATE TABLE Patrols_Integrantes (
     id_patrol INT NOT NULL,    
-    id_user INT NOT NULL,
+    id_user INT NOT NULL UNIQUE,
+    permission_level INT DEFAULT 0, 
     status ENUM("Ativo", "Inativo") DEFAULT "Ativo",
     FOREIGN KEY (id_patrol) REFERENCES Patrols(id) ON DELETE CASCADE,
     FOREIGN KEY (id_user) REFERENCES Users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE Transfer_Requests (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    id_user INT NOT NULL, -- Usuário que vai ser transferido
+    id_assignee_user INT NOT NULL, -- Usuário que fez a transferência
+
+    -- Esses ids podem ser nulos, já que nem sempre o usuário vai ser transferido
+    -- para todos eles ao mesmo tempo, exemplo, vou mudar de tropa, mas não vou mudar de grupo
+    -- ou vou mudar de tropa em outro estado, então vou ter que mudar de grupo também
+    id_group INT, -- Id do grupo que o usuário vai ser transferido
+    id_troup INT, -- Id da tropa que o usuário vai ser transferido
+    id_patrol INT, -- Id da patrulha que o usuário vai ser transferido
+
+    FOREIGN KEY (id_group) REFERENCES Groups(id) ON DELETE SET NULL,
+    FOREIGN KEY (id_troup) REFERENCES Troups(id) ON DELETE SET NULL,
+    FOREIGN KEY (id_patrol) REFERENCES Patrols(id) ON DELETE SET NULL,
+    FOREIGN KEY (id_user) REFERENCES Users(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_assignee_user) REFERENCES Users(id) ON DELETE CASCADE
 );
 
 
@@ -136,6 +168,7 @@ CREATE TABLE User_Badges (
     CONSTRAINT FK_current_badge_level_id FOREIGN KEY (id_level) REFERENCES Badge_Levels(id) ON DELETE SET NULL
 );
 
+-- Session Related
 CREATE TABLE active_sessions (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
@@ -144,4 +177,27 @@ CREATE TABLE active_sessions (
     expires_at DATETIME,
     UNIQUE (token_hash),
     FOREIGN KEY (user_id) REFERENCES Users(id)
+);
+
+-- Event Related
+CREATE TABLE Events (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    banner_url VARCHAR(255),
+
+    start_date DATE NOT NULL DEFAULT NOW(),
+    finish_date DATE,
+
+    description TEXT NOT NULL,
+    title VARCHAR(127)
+);
+
+-- TODO: Implementar ramo (lobinho, escoteiro, etc) depois
+CREATE TABLE Event_Target (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    id_event INT NOT NULL,
+    id_group INT,
+    id_troup INT,
+    FOREIGN KEY (id_event) REFERENCES Events(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_group) REFERENCES Groups(id) ON DELETE SET NULL,
+    FOREIGN KEY (id_troup) REFERENCES Troups(id) ON DELETE SET NULL,
 );

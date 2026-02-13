@@ -14,7 +14,7 @@ class Endpoint {
     private array $param_names = [];
 
     private String $handler_path;
-    private array $required_fields = [];
+    private array $body_fields = [];
 
     private bool $needs_auth = false;
 
@@ -28,16 +28,14 @@ class Endpoint {
         $offset = -1;
         if (sizeof($splitted_section) == 3) {
             $needs_auth = $splitted_section[EndpointFormat::NEEDS_AUTH];
-            if ($needs_auth == "*") {
-                $this->needs_auth = true;
-            } else {
+            if ($needs_auth != "*") {
                 http_response_code(500);
                 echo json_encode([
                     "message" => "The route at section [$section] should have a '*' instead of an '$needs_auth'"
                 ]);
                 exit;
             }
-
+            $this->needs_auth = true;
             $offset = 0;
         }
 
@@ -45,11 +43,11 @@ class Endpoint {
         $raw_url = $splitted_section[EndpointFormat::RAW_URL + $offset];
         
         if (array_key_exists("body", $section_content)) {
-            $this->required_fields = json_decode($section_content["body"], true);
+            $this->body_fields = json_decode($section_content["body"], true);
         }
        
         if ($this->needs_auth) {
-            $this->required_fields["refresh_token"] = "string";
+            $this->body_fields["refresh_token"] = "string";
         }
         
         $this->handler_path = $section_content["handler"];
@@ -102,8 +100,8 @@ class Endpoint {
         return $this->handler_path;
     }
     
-    public function getRequiredFields(): array {
-        return $this->required_fields;
+    public function getBodyFields(): array {
+        return $this->body_fields;
     }
 
     public function instantiateHandler(): array {

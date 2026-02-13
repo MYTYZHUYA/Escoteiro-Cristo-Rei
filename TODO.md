@@ -8,10 +8,10 @@
     - [ ] Eventos / Avisos
 - [ ] API
     ### Endpoints:
-    - [ ] Login
-    - [ ] Signup (registro)
-    - [ ] GetAccount (Puxar informações do perfil)
-    - [ ] UpdateAccountInfo (Atualizar o perfil)
+    - [X] Login
+    - [X] Signup (registro)
+    - [X] GetAccount (Puxar informações do perfil)
+    - [X] UpdateAccountInfo (Atualizar o perfil)
     - [ ] AddFriend / RemoveFriend (Adicionar outro escoteiro como amigo)
     - [ ] GetTeam (Puxar informações da sua patrulha)
     - [ ] SetTeam (Designar um escoteiro para uma patrulha)
